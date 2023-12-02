@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/CSS/style.css">
     <!-- Favicon -->
     <link rel="icon" href="/static/assets/favicon/favicon.png" type="image/x-icon">
-    <title>Clik</title>
+    <title>Clik Tips</title>
 </head>
 <body>
     <!-- First navbar -->
@@ -31,12 +31,14 @@
                 <!-- Search form -->
                 <form class="d-flex mx-auto">
                     <div class="input-group search-input-container" style="width:50vw;">
-                        <input class="form-control search-input" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control search-input" type="search" placeholder="Search in Clicktips.com" aria-label="Search">
                         <span class="input-group-text search-icon">
+                            <button type="submit" class="btn search-button">
                             <!-- Conteúdo SVG da lupa -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="24" height="24">
                                 <path d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z"></path>
                             </svg>
+                            </button>
                         </span>
                     </div>
                 </form>
@@ -52,12 +54,14 @@
     
             <!--   Login section -->
             <div class="navbar-nav ms-auto">
-                <span class="fw-bold text-primary d-md-inline d-none text-white me-3" id="login" style="margin-right: 20px;">
-                    Login
-                </span>
-                <span class="fw-bold text-primary d-md-inline d-none text-white me-3" id="register" style="margin-right: 20px;">
-                    Register
-                </span>
+                <ul class="navbar-nav ">
+                    <li class="nav-item ">
+                        <a  class="fw-bold text-primary text-decoration-none d-md-inline d-none text-white me-3 " href="#login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="fw-bold text-primary text-decoration-none d-md-inline d-none text-white me-3" id="register" href="#register">Register</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <!--  End of nav content-->
@@ -65,7 +69,7 @@
 
 
 <!--   SEGUNDA NAVIGATION -->
-<nav class="navbar navbar-expand-md navbar-light bg-primary">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container-xxl">
         <!-- Navbar links -->
         <div class="collapse navbar-collapse justify-content-end align-center navbar-sm" 
