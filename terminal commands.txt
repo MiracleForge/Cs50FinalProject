@@ -27,3 +27,9 @@ npm install -g http-server -> install node.js to to create basic servers
 python -m http.server
 
 quit() --> exiting a programing using ubuntu
+
+
+--- FLASK COMMANDS ----
+flask run
+flask --app [NAME] run
+flask --app [NAME] run --debug

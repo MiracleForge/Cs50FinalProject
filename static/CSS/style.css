@@ -1,3 +1,13 @@
+main {
+    padding: 0!important;
+    left: 0!important;
+    position: absolute;
+    top: 0!important;
+
+    z-index: -1;
+}
+
+
 /*  NAVBAR -- BOOTSTRAP --- CUSTOM */
 
 /* Toggler icon styling for the Bootstrap navbar */
@@ -11,6 +21,8 @@
     cursor: pointer;
     background-color: #808080;
 }
+
+
 
 /* Animation for the search icon on hover */
 .search-icon:hover svg {
@@ -57,20 +69,60 @@
 
 /* Styles for screens larger than 600 pixels */
 @media (min-width: 600px) {
+
+
     .search-input-container {
         width: 80vw;
         margin-left: 15vw;
     }
+    main {
+        padding: 0!important;
+        left: 0!important;
+        position: absolute;
+        top: 0!important;
+        width: max-content;
+        z-index: -1;
+    }
+
+    body {
+        position: relative;
+    }
+
 }
 
+/* Adicione esta parte ao seu arquivo CSS existente ou crie um novo arquivo CSS */
+@media (max-width: 1100px) and (min-width: 765px) {
+    /* Esconder os links e mostrar apenas os ícones SVG */
+    .navbar-nav .nav-link, #slogan, #announceBtn {
+        font-size: 0; /* Ocultar o texto ajustando o tamanho da fonte para zero */
+    }
+
+    .navbar-nav .nav-link svg, #announceBtn svg {
+        display: inline-block;
+    }
+}
 /* Styles for screens larger than 800 pixels */
 @media (min-width: 800px) {
+
     .search-input-container {
         width: 60vw;
         margin-left: 5vw;
     }
     .navbar-custom {
         height: 50px; 
+    }
+
+    main {
+        padding: 0!important;
+        left: 0!important;
+        position: absolute;
+        top: 0!important;
+  
+        z-index: -1;
+    }
+
+    body {
+        position: relative;
     }
     
 }
