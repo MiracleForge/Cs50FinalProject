@@ -31,6 +31,7 @@
     </script>
 
 <div class="container-xxl d-flex flex-column">
+
     <div class="row justify-content-center">
         <div class="col-md-5 shadow-lg rounded p-4 mb-4">
             <div class="card">
@@ -45,18 +46,18 @@
                 </div>
                 <!-- Card-Body-->
                 <div class="card-body custon-cardBodyLogin" id="registerform-cardHeader">
-                    <form class="form" role="form" autocomplete="off" method="POST" action="/login">
+                    <form class="form" role="form" autocomplete="off" method="POST" action="/register">
                         <!---->
                         <div class="form-group pt-2">
-                            <label for="username " class="text-white">Username * <small class="text-dark m-2 ">How your name will appear in ads.</small></label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Example: Jon" required>
+                            <label for="username" class="text-white">Username * <small class="text-dark m-2 ">How your name will appear in ads.</small></label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Example: Jon" autocomplete="username" required>
                         </div>
                         <!---->
                         <div class="form-group pt-2">
                             <label for="email" class="text-white">Email *
                                 <small class=" m-2 text-dark "> Provide a valid email.</small>
                             </label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" autocomplete="email" required>
                         </div>
 
                         <!---->
