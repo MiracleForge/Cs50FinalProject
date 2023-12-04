@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Login
+    Register
 {% endblock %}
 
 {% block main %}
@@ -40,30 +40,54 @@
                         <a href="/">
                             <img class="img-fluid w-25 navbar-brand" src="/static/assets/favicon/favicon.png" alt="Logo">
                         </a>
-                        <h4 class="mb-0 tw-bold text-light">Login in your account <emoji>😊</emoji></h4>
+                        <h4 class="mb-0 tw-bold text-light">Create a new account on ClickTips <emoji>😊</emoji></h4>
                     </div>
                 </div>
                 <!-- Card-Body-->
                 <div class="card-body custon-cardBodyLogin" id="registerform-cardHeader">
                     <form class="form" role="form" autocomplete="off" method="POST" action="/login">
                         <!---->
-                        <div class="form-group pt-2 ">
-                            <label for="username" class="text-white">Username:</label>
+                        <div class="form-group pt-2">
+                            <label for="username " class="text-white">Username * <small class="text-dark m-2 ">How your name will appear in ads.</small></label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="Example: Jon" required>
                         </div>
                         <!---->
                         <div class="form-group pt-2">
-                            <label for="password" class="text-white">Password: </label>
+                            <label for="email" class="text-white">Email *
+                                <small class=" m-2 text-dark "> Provide a valid email.</small>
+                            </label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+
+                        <!---->
+                        <div class="form-group pt-2">
+                            <label for="password" class="text-white">Password * 
+                                <small class="text-dark m-2 "> Use letters, numbers and special characters.</small></label>
                             <input type="password" class="form-control" id="password" name="password" required>
                         </div>
-                        <small class="text-black pt-2"> Forgot your username or password? <a href="#" class="text-white text-decoration-underline tw-bold"> ClickHere</a></small>
                         <!---->
-
-                        <!--Login button-->
+                        <div class="form-group pt-2">
+                            <label for="confirmPassword" class="text-white">Confirm Password * 
+                                <small class="text-dark m-2 ">Confirm your password.</small>
+                            </label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <!--Terms and agree-->
+                        <div class="form-group pt-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="acceptTerms" required>
+                                <label class="form-check-label text-white " for="acceptTerms">
+                                    I have read and understand the terms.
+                                </label>
+                            </div>
+                            <small class="text-dark">
+                                Read our <a href="/term" class="text-white text-decoration-underline">terms</a>.
+                            </small>
+                        </div>
                         <div class="d-flex flex-column align-items-center pt-3" id="button-register">
-                            <button type="submit" class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold " id="pulseButton" >Login</button>
+                            <button type="submit" class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold " id="pulseButton" >Register</button>
                             <hr class="my-3 w-75 shaded-line pt-1 rounded-pill" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-                            <small class="text-black pt-2"> Don't have a clicktips account? <a href="/register" class="text-white text-decoration-underline tw-bold"> Sign in</a></small>
+                            <small class="text-white pt-2">Do you already have an account? <a href="/login" class="text-dark text-decoration-underline">Login</a></small>
                         </div>
                     </form>
                 </div>
@@ -71,5 +95,7 @@
         </div>
     </div>
 </div>
+
+
 
 {% endblock %}

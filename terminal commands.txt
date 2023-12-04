@@ -3,6 +3,7 @@ $env:username -
 git --> git helper
 git init
 git remote add origin <shttps://github.com/MiracleForge/Cs50FinalProject.git>
+git push origin main
 
 
 apt-get --> program to baseack get thinks likepython and install for me

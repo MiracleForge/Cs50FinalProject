@@ -19,9 +19,12 @@ document.getElementById('main-nav').addEventListener('hide.bs.collapse', functio
         document.getElementById('login').classList.remove('d-none');
         document.getElementById('register').classList.remove('d-none');
 
-        // Esconde os elementos de Login e Register na segunda navegação
+
         document.getElementById('loginMobile').classList.add('d-none');
         document.getElementById('registerMobile').classList.add('d-none');
     }
 });
+
+// Animarions
+
 
