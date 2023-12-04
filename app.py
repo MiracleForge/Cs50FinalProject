@@ -33,7 +33,7 @@ def after_request(response):
 def index():
     if "user_id" in session:
         user_id = session["user_id"]
-        # Assuming you have a database connection named 'db' and a table named 'autenticacao'
+        
         result = db.execute("SELECT username FROM autenticacao WHERE id = ?", (user_id,))
         display_username = result[0]["username"] if result else None
         return render_template("layout.html", display_username=display_username)
@@ -108,12 +108,12 @@ def register():
         flash("Please fill in all the fields", "error")
         user_isvalid = False
 
-    # Check if passwords match
+
     if password_input != confirm_input:
         flash("Passwords must be identical", "error")
         user_isvalid = False
 
-    # Check password strength
+
     if not (
             re.search(r"[a-zA-Z]", password_input)
             and re.search(r"\d", password_input)
