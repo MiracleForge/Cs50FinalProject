@@ -6,7 +6,9 @@ main {
 
     z-index: -1;
 }
-
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 /*  NAVBAR -- BOOTSTRAP --- CUSTOM */
 
@@ -17,9 +19,10 @@ main {
 
 /* FORM FIRST NAVIGATION */
 /* Styling for the search icon on hover */
-.search-icon:hover {
+.search-icon:hover, #announceBtn:hover {
     cursor: pointer;
     background-color: #808080;
+    color: black!important;
 }
 
 
@@ -59,6 +62,7 @@ main {
     margin-top: -5px;
     color: #768390!important; 
 }
+
 /*Animations */
 
 
@@ -67,7 +71,7 @@ main {
 }
 
 /*------- REGISTER PAGE-------*/
-#registerform-cardHeader, #nav-container{
+#custon-cardHeader, #nav-container{
     background-color: rgba(23, 7, 247, 0.7) !important;
 }
 
@@ -75,9 +79,6 @@ main {
     background-color: #768390!important;
 }
 
-.custon-cardBodyLogin, .button-register {
-    font-family: Arial, Helvetica, sans-serif;
-}
 /*------- REGISTER PAGE ENDS - */
 /* Styles for screens larger than 600 pixels */
 @media (min-width: 600px) {
@@ -102,11 +103,11 @@ main {
 
 }
 
-/* Adicione esta parte ao seu arquivo CSS existente ou crie um novo arquivo CSS */
+
 @media (max-width: 1100px) and (min-width: 765px) {
-    /* Esconder os links e mostrar apenas os ícones SVG */
+
     .navbar-nav .nav-link, #slogan, #announceBtn {
-        font-size: 0; /* Ocultar o texto ajustando o tamanho da fonte para zero */
+        font-size: 0; 
     }
 
     .navbar-nav .nav-link svg, #announceBtn svg {

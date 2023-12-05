@@ -25,6 +25,10 @@ document.getElementById('main-nav').addEventListener('hide.bs.collapse', functio
     }
 });
 
+document.getElementById("announceBtn").addEventListener("click", function() {
+    window.location.href = "/announce"
+
+})
 // Animarions
 
 

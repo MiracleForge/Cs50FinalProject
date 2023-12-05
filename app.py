@@ -1,5 +1,5 @@
 import os
-import sys
+
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, get_flashed_messages
 from flask_session import Session
@@ -157,4 +157,10 @@ def myads():
             return redirect("/")
         else:
             return render_template("login.html")
+        
+
+@app.route("/announce", methods = ["GET", "POST"])
+@login_required
+def announce():
+    return render_template("index.html")
     
