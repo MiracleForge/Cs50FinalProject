@@ -158,7 +158,7 @@ def myads():
         else:
             return render_template("login.html")
         
-
+#trying to work with git
 @app.route("/announce", methods = ["GET", "POST"])
 @login_required
 def announce():

@@ -1,0 +1,32 @@
+----------- TEXT -------
+    -------------- HEADING TEXTS --------
+    class "h1" ~ "h6" ex: <h2 class ="h6"></h2>
+    -------------- DISPLAY HEADINGS --------
+    class "display-1" ~ "display-6" ex: <h2 class ="display-5"></h2>
+                                             Can be apply to <p></p>
+    -------------- LEAD TEXT & ALIGGMENTS --------
+    class = "lead" ex: <p class="lead"></p>  Is used to articles or first
+    class = "lead text-center"
+    class = "lead text-start"
+    class = "lead text-end"
+    -------------- Text decoractions and weight --------
+    class = "text-decoration-underline"
+    class = "text-decoration-line-through"
+    class = "fw-bold"
+    <small></small>
+    -------------- Text colors --------
+    class = "text-primary"
+    class = "text-secundary"
+    class = "text-info"
+    class = "text-warning"
+    class = "text-success"
+    class = "text-danger"
+    class = "text-muted"
+    -------------- Bg colors --------
+    <class ="text-white bg-primary"
+    class = "text-white bg-secundary"
+    class = "text-white bg-info"
+    class = "text-white bg-warning"
+    class = "text-white bg-success"
+    class = "text-white bg-danger"
+    class = "text-white bg-muted"
