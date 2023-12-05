@@ -162,5 +162,5 @@ def myads():
 @app.route("/announce", methods = ["GET", "POST"])
 @login_required
 def announce():
-    return render_template("index.html")
+    return render_template("announce.html")
     
