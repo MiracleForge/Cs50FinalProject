@@ -5,5 +5,248 @@
 {% endblock %}
 
 {% block main %}
-    <p>{{ads_type}}</p>
+
+<!-- Modulação -->
+{% set ads_category_map = {
+    'houses_Ad': {'name': 'Real State'},
+    'ownedCars_Ad': {'name': 'Pre-Owned Cars'},
+    'furniture_Ad': {'name': 'Home Essentials'},
+    'tech_Ad': {'name': 'Tech Essentials'},
+    'musical_Ad': {'name': 'Musical Instrument'},
+    'toys_Ad': {'name': 'Children\'s Items and Toys'},
+    'pet_Ad': {'name': 'Pets'},
+    'office_Ad': {'name': 'Commerce and office'},
+    'fashion_Ad': {'name': 'Fashion and Beauty'},
+} %}
+
+<div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block bg-white">
+    <div class="card-header bg-dark text-white h-25 text-center">
+        <a href="/" class="d-block mx-auto">
+            <img class="img-fluid navbar-brand" src="/static/assets/favicon/favicon.png" alt="Logo" style="width: 10%; min-width: 70px;">
+        </a>
+        <h4 class="mb-0 tw-bold p-2 ">Let's Start. You are in 
+            {% if ads_type in ads_category_map %} 
+            {{ads_category_map[ads_type]['name']}}
+            {% endif %}
+            <emoji>😊</emoji>
+        </h4>
+    </div>
+    <!-- END card header-->
+    <!-- Form 1 e Form 2 em uma coluna e a outra vazia -->
+    <div class="card-body custon-cardbody">
+        <div class="row">
+            <!-- Coluna 1 com os formulários -->
+            <div class="col-12 col-lg-6">
+                <div class="card-body mx-3">
+                    <!-- Formulário 1 -->
+                    <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
+                        <div class="form-group">
+                            <label for="title" class="text-white ">Title * <small class="text-dark">Title of your announce</small></label>
+                            <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                        </div>
+                    </form>
+                    <!-- Formulário 2 -->
+                    <form class="form py-2 " role="form" autocomplete="off" method="POST" action="/register">
+                        <div class="form-group ">
+                            <label for="username" class="text-white">Description * <small class="text-dark">Description of your announce</small></label>
+                            <input type="text" class="form-control border border-dark shadow p-3" id="username" name="username" required style="height: 100px;">
+                        </div>
+                    </form>
+                    <!-- DropDown-->
+                    {% if ad_type == "houses_Ad" %}
+                    <div class="dropdown pt-3">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Property Type
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <li><a class="dropdown-item" href="#">Apartment</a></li>
+                          <li><a class="dropdown-item" href="#">House</a></li>
+                          <li><a class="dropdown-item" href="#">Studio</a></li>
+                          <li><a class="dropdown-item" href="#">Loft</a></li>
+                          <li><a class="dropdown-item" href="#">Penthouse</a></li>
+                        </ul>
+                      </div>
+                      {% endif %}
+                    <!---->
+                    <!-- RENT OR SELLING-->
+                    <div class="form-group pt-4">
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="acceptTerms1" name="acceptTerms" required>
+                            <label class="form-check-label text-white" for="acceptTerms1">
+                                I am listing this property for sale.
+
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="acceptTerms2" name="acceptTerms" required>
+                            <label class="form-check-label text-white" for="acceptTerms2">
+                                I am listing this property for rent.
+                            </label>
+                        </div>
+                    </div>                    
+                    <!-- END rent selling-->
+                    <!-- Rooms Dropdown-->
+                    <div class="dropdown pt-3">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Numbers of rooms
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <li><a class="dropdown-item" href="#">1</a></li>
+                          <li><a class="dropdown-item" href="#">2</a></li>
+                          <li><a class="dropdown-item" href="#">3</a></li>
+                          <li><a class="dropdown-item" href="#">4</a></li>
+                          <li><a class="dropdown-item" href="#">5 or more</a></li>
+                        </ul>
+                      </div>
+                    <!---->
+                    <!-- bathroom -->
+                    <div class="dropdown pt-3">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Numbers of bathroom
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <li><a class="dropdown-item" href="#">1</a></li>
+                          <li><a class="dropdown-item" href="#">2</a></li>
+                          <li><a class="dropdown-item" href="#">3</a></li>
+                          <li><a class="dropdown-item" href="#">4</a></li>
+                          <li><a class="dropdown-item" href="#">5 or more</a></li>
+                        </ul>
+                      </div>
+                    <!---->
+                    <!-- From 3-->
+                    <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
+                        <div class="form-group">
+                            <label for="title" class="text-white ">Area (sq ft) * <small class="text-dark">Area of the property</small></label>
+                            <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                        </div>
+                    </form>
+                    <!---->
+                    <!-- bathroom -->
+                    <div class="dropdown pt-2">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            Garage Space:
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">0</a></li>
+                            <li><a class="dropdown-item" href="#">1</a></li>
+                            <li><a class="dropdown-item" href="#">2</a></li>
+                            <li><a class="dropdown-item" href="#">3 or more</a></li>
+                        </ul>
+                        </div>
+                    <!---->
+                    <!-- checkboxes -->
+                    <div class="form-group pt-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="airConditioning" name="amenities[]" value="airConditioning">
+                                    <label class="form-check-label text-white" for="airConditioning">
+                                        Air Conditioning
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="grill" name="amenities[]" value="grill">
+                                    <label class="form-check-label text-white" for="grill">
+                                        Grill / Barbecue
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
+                                    <label class="form-check-label text-white" for="rental">
+                                        Laundry Room
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
+                                    <label class="form-check-label text-white" for="rental">
+                                        Balcony
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
+                                    <label class="form-check-label text-white" for="rental">
+                                        Maid's Room
+                                    </label>
+                                </div>
+                                <!--  -->
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="laundry" name="amenities[]" value="laundry">
+                                    <label class="form-check-label text-white" for="laundry">
+                                        Laundry Room
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="balcony" name="amenities[]" value="balcony">
+                                    <label class="form-check-label text-white" for="balcony">
+                                        Balcony
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
+                                    <label class="form-check-label text-white" for="rental">
+                                        Walk-in Closets
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
+                                    <label class="form-check-label text-white" for="rental">
+                                        Kitchen Cabinets
+                                    </label>
+                                </div>
+                                <!---->
+                            </div>
+                                <!-- From price-->
+                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
+                                    <div class="form-group">
+                                        <label for="title" class="text-white ">Price * <small class="text-dark">Property price</small></label>
+                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                                    </div>
+                                </form>
+                                <!---->
+                                <!--images-->
+                                <form action="/upload" method="post" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                                        <input class="form-control" type="file" id="formFileMultiple" name="files[]" multiple>
+                                    </div>
+                                    <button class="btn btn-primary" type="submit">Upload</button>
+                                </form>
+                                <!--Adress-->
+                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
+                                    <div class="form-group">
+                                        <label for="title" class="text-white ">Adress* <small class="text-dark">Property Localization</small></label>
+                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                                    </div>
+                                </form>
+                                <!-- TEL-->
+                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
+                                    <div class="form-group">
+                                        <label for="telefone" class="form-label" id="telefone" name="telefone" placeholder="Digit your cell number" required><small class="text-white">Cel Number</small></label>
+                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                                    </div>
+                                </form>
+                                <!-- send -->
+                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                </form>
+                        </div>
+                    </div>
+                    
+                    <!---->
+                </div>
+            </div>
+            <!-- Coluna 2 vazia -->
+            <div class="col-12 col-lg-6">
+                <!-- Adicione qualquer conteúdo adicional ou deixe vazio conforme necessário -->
+            </div>
+ 
+        </div>
+    </div>
+</div>
+
+
+
+      
 {% endblock %}

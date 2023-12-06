@@ -35,6 +35,7 @@ body {
 /* Keyframes for the pulse animation */
 /* FORM FIRST NAVIGATION */
 
+
 /*Animations */
 @keyframes pulse {
     0% {
@@ -71,8 +72,12 @@ body {
 }
 
 /*------- REGISTER PAGE-------*/
-#custon-cardHeader, #nav-container {
+#custon-cardHeader, #nav-container .custon-cardbody{
     background-color: rgba(23, 7, 247, 0.7) !important;
+}
+
+.custon-cardbord{
+    background-color: rgba(16, 11, 87, 0.8) !important;
 }
 
 .bg-white:active {
