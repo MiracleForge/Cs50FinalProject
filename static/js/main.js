@@ -29,6 +29,12 @@ document.getElementById("announceBtn").addEventListener("click", function() {
     window.location.href = "/announce"
 
 })
-// Animarions
+
+
+
+
+
+
+
 
 

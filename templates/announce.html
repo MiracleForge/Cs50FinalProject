@@ -11,27 +11,48 @@
             <div class="card">
                 <!-- Header working with git-->
                 <div class="card-header bg-dark text-center">
+                    <!--Carosel controler-->
+                    <div class="">
+                        <a class="carousel-control-prev " href="#mainCarosel" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                        <!-- Next-->
+                        <a class="carousel-control-next " href="#mainCarosel" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only"></span>
+                        </a>
+                    </div>
                     <div class="d-flex flex-column align-items-center">
                         <a href="/">
                             <img class="img-fluid w-25 navbar-brand" src="/static/assets/favicon/favicon.png" alt="Logo">
                         </a>
                         <h4 class="mb-0 tw-bold text-light">Ready to share on ClickTips? Select a category to get started! <emoji>😊</emoji></h4>
                     </div>
+                    <!--END carosel controler-->
                 </div>
                 <!-- Card-Body-->
                 <!-- Carousel -->
-                <div id="carouselExampleInterval" class="carousel slide mx-auto" data-ride="carousel">
+                <div id="mainCarosel" class="carousel slide mx-auto" data-ride="carousel">
                     <div class="carousel-inner">
+                        
                     <div class="carousel-item active" data-interval="10000">
+                        
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-houses-96.png" alt="">
-                                <h5 class="text-center text-white pt-2">Real State</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
-                                    <p class="card-text text-white">Follow your dreams with one click and look for your dream house</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="houses_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-houses-96.png" alt="Real State">
+                                        <h5 class="text-center text-white pt-2">Real State</h5>
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">Follow your dreams with one click and look for your dream house or just a vacation place.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -39,13 +60,19 @@
                     <div class="carousel-item" data-interval="2000">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-traffic-jam-96 (3).png" alt="Pre-Owned Cars">
-                                <h5 class="text-center text-white pt-2">Pre-Owned Cars</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom"  id="custon-cardHeader">
-                                    <p class="card-text text-white" > Find the perfect match for your journey. Each vehicle has a tale to tell, and it might just become a part of yours.</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="ownedCars_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-traffic-jam-96 (3).png" alt="Pre-Owned Cars">
+                                        <h5 class="text-center text-white pt-2">Pre-Owned Cars</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white" > Find the perfect match for your journey. Each vehicle has a tale to tell, and it might just become a part of yours.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -53,13 +80,19 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-lampshade-64 (1).png" style="height: 96px; width: 96px;" alt="Home Essentials">
-                                <h5 class="text-center text-white pt-2">Home Essentials</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom"id="custon-cardHeader">
-                                    <p class="card-text text-white">Whether you're seeking the perfect sofa for cozy family evenings or upgrading your kitchen with appliances.</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="furniture_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-lampshade-64 (1).png" style="height: 96px; width: 96px;" alt="Home Essentials">
+                                        <h5 class="text-center text-white pt-2">Home Essentials</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">Whether you're seeking the perfect sofa for cozy family evenings or upgrading your kitchen with appliances.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit"  id="announceBtn" class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -67,13 +100,19 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-laptop-96.png" alt="Tech Essentials">
-                                <h5 class="text-center text-white pt-2">Tech Essentials</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
-                                    <p class="card-text text-white">From high-performance laptops that fuel productivity to smartwatches that keep you connected on the go.</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="tech_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-laptop-96.png" alt="Tech Essentials">
+                                        <h5 class="text-center text-white pt-2">Tech Essentials</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">From high-performance laptops that fuel productivity to smartwatches that keep you connected on the go.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -81,13 +120,19 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-musical-notes-100.png" alt="Musical Instrument">
-                                <h5 class="text-center text-white pt-2">Musical Instrument</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
-                                    <p class="card-text text-white">Immerse yourself in a symphony of sounds with a selection of musical instruments.</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="musical_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-musical-notes-100.png" alt="Musical Instrument">
+                                        <h5 class="text-center text-white pt-2">Musical Instrument</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">Immerse yourself in a symphony of sounds with a selection of musical instruments.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -95,13 +140,19 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-toys-64.png" style="height: 96px; width: 96px;" alt="Children's Items and Toys">
-                                <h5 class="text-center text-white pt-2">Children's Items and Toys</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
-                                    <p class="card-text text-white">Immerse your little ones in a world where stories come to life, and every day is an opportunity for joyful discovery.</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="toys_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-toys-64.png" style="height: 96px; width: 96px;" alt="Children's Items and Toys">
+                                        <h5 class="text-center text-white pt-2">Children's Items and Toys</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">Immerse your little ones in a world where stories come to life, and every day is an opportunity for joyful discovery.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -109,13 +160,19 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-pets-100.png" style="height: 96px; width: 96px;"  alt="Pets">
-                                <h5 class="text-center text-white pt-2">Pets</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
-                                    <p class="card-text text-white">Enjoy the company of your four-legged friends with products that celebrates the bond between pet and owner.</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="pet_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-pets-100.png" style="height: 96px; width: 96px;"  alt="Pets">
+                                        <h5 class="text-center text-white pt-2">Pets</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">Enjoy the company of your four-legged friends with products that celebrates the bond between pet and owner.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -123,13 +180,19 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-office-100.png" style="height: 96px; width: 96px;"  alt="Commerce and office">
-                                <h5 class="text-center text-white pt-2">Commerce and office</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
-                                    <p class="card-text text-white">Discover a range of office supplies that go beyond the basics, ergonomic and office items </p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="office_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-office-100.png" style="height: 96px; width: 96px;"  alt="Commerce and office">
+                                        <h5 class="text-center text-white pt-2">Commerce and office</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">Discover a range of office supplies that go beyond the basics, ergonomic and office items </p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -137,41 +200,45 @@
                     <div class="carousel-item">
                         <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-fashion-100.png" style="height: 96px; width: 96px;"  alt="Fashion and Beauty">
-                                <h5 class="text-center text-white pt-2">Fashion and Beauty</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="fashion_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-fashion-100.png" style="height: 96px; width: 96px;"  alt="Fashion and Beauty">
+                                        <h5 class="text-center text-white pt-2">Fashion and Beauty</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
                                     <p class="card-text text-white">Discover the latest trends in clothing, accessories, and beauty products, to express your unique identity.</p>
-                                </div>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn"  class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <!---->
                     <div class="carousel-item">
-                        <div class="col ">
+                        <div class="col">
                             <div class="card rounded-top h-md-100 h-100">
-                                <div class="card-header bg-dark text-center ">
-                                <img class="img-fluid" src="/static/assets/image/icons8-controller-100.png"  style="height: 96px; width: 96px;" alt="Games">
-                                <h5 class="text-center text-white pt-2">Games</h5> 
-                                </div>
-                                <div class="card-body rounded-bottom" id="custon-cardHeader">
-                                    <p class="card-text text-white">Discover the latest titles that redefine immersive gameplay, takes your gaming experience to new heights.</p>
-                                </div>
+                                <form action="/announce" method="POST">
+                                    <input type="hidden" name="ad_category" value="games_Ad">
+                                    <div class="card-header bg-dark text-center">
+                                        <img class="img-fluid" src="/static/assets/image/icons8-controller-100.png"  style="height: 96px; width: 96px;" alt="Games">                                       
+                                        <h5 class="text-center text-white pt-2">Games</h5> 
+                                    </div>
+                                    <div class="card-body rounded-bottom" id="custon-cardHeader">
+                                        <p class="card-text text-white">Discover the latest titles that redefine immersive gameplay, takes your gaming experience to new heights.</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button type="submit" id="announceBtn" class="btn btn-primary rounded-pill btn-lg bg-white text-dark tw-bold">Start Now!</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     </div>
                     <!--Prev-->
-                    <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only"></span>
-                    </a>
-                    <!-- Next-->
-                    <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only"></span>
-                    </a>
+
                 </div>
             </div>
         </div>

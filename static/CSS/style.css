@@ -21,7 +21,7 @@ body {
 /* Styling for the search icon on hover */
 .search-icon:hover, #announceBtn:hover {
     cursor: pointer;
-    background-color: #808080;
+    background-color: #808080!important;
     color: black!important;
 }
 
@@ -71,13 +71,14 @@ body {
 }
 
 /*------- REGISTER PAGE-------*/
-#custon-cardHeader, #nav-container{
+#custon-cardHeader, #nav-container {
     background-color: rgba(23, 7, 247, 0.7) !important;
 }
 
 .bg-white:active {
     background-color: #768390!important;
 }
+
 
 /*------- REGISTER PAGE ENDS - */
 /* Styles for screens larger than 600 pixels */

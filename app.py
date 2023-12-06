@@ -162,5 +162,17 @@ def myads():
 @app.route("/announce", methods = ["GET", "POST"])
 @login_required
 def announce():
-    return render_template("announce.html")
+    if request.method == "GET":
+        return render_template("announce.html")
     
+    if request.method == "POST":
+        ad_type_return = request.form.get("ad_category")
+
+        if not ad_type_return:
+            return render_template("announce.html")
+
+        return render_template("AdsCreate.html", ads_type=ad_type_return)
+
+
+
+
