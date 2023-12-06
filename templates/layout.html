@@ -56,10 +56,10 @@
     
             <!--   Login section -->
             <div class="navbar-nav ms-auto">
-                {% if session["user_id"] %}
+                {% if g.display_username %}
                 <ul class="navbar-nav ">
                     <li class="nav-item ">
-                        <a  class="fw-bold text-primary text-decoration-none d-md-inline d-none text-white me-3 " href="#">{{display_username}}</a>
+                        <a  class="fw-bold text-primary text-decoration-none d-md-inline d-none text-white me-3 " href="#">{{g.display_username}}</a>
                     </li>
                     <li class="nav-item">
                         <a  class="fw-bold text-primary text-decoration-none d-md-inline d-none text-white me-3" id="register" href="/logout">Logout</a>

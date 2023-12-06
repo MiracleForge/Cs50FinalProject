@@ -31,6 +31,27 @@
     </script>
 
 <div class="container-xxl d-flex flex-column">
+    <!-- Messages-->
+    {% if error %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="alert alert-danger flash-alert text-center" role="alert">
+                    {{ error }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if success_message %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="alert alert-success flash-alert text-center" role="alert">
+                    {{ success_message }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <!-- end messages-->
     <div class="row justify-content-center">
         <div class="col-md-5 shadow-lg rounded p-4 mb-4">
             <div class="card">
