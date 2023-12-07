@@ -6,12 +6,85 @@
 
 {% block main %}
 
-<!-- Modulação -->
+
+<!-- Modulaçãon I love DICTIONARIES https://docs.python.org/3/tutorial/datastructures.html -->
 {% set ads_category_map = {
-    'houses_Ad': {'name': 'Real State'},
-    'ownedCars_Ad': {'name': 'Pre-Owned Cars'},
-    'furniture_Ad': {'name': 'Home Essentials'},
-    'tech_Ad': {'name': 'Tech Essentials'},
+    
+    'houses_Ad': {
+        'name': ['Real State', 'Area (sq ft) *'],
+        'imagem': '../static/assets/image/icons8-houses-96.png', 
+        'dropdowns': [ {
+
+            'label': 'Property Type',
+            'options': ['Apartment', 'House', 'Studio','Loft', 'Penthouse']
+        },
+        {
+            'label': 'Numbers of Rooms',
+            'options': ['1', '2', '3', '4', '5 or more']
+        },
+        {
+            'label': 'Numbers of bathroom',
+            'options': ['1', '2', '3', '4', '5 or more']
+        },
+        {
+            'label': 'Garage Space',
+            'options': ['1', '2', '3', '4', '5 or more']
+        }
+        ],
+        'checkbox': ['Air Conditioning', 'Grill / Barbecue', 'Laundry Room', 'Balcony', 'Maid\'s Room', 'Walk-in Closets', 'Kitchen Cabinets']
+    },
+
+    'ownedCars_Ad': {
+        'name': ['Pre-Owned Cars', 'Mileage'],
+        'imagem': '/static/assets/image/icons8-traffic-jam-96 (3).png',
+        'dropdowns': [ {
+
+            'label': 'Car Model',
+            'options': ['Ford', 'Fiat', 'Hundai','Toyota', 'Chevrolet', 'Volkswagen', 'Honda', 'Renault', 'Mitsubishi', 'Nissan', 'Audi', 'Citroen', 'Chery', 'Other']
+        },
+        {
+            'label': 'Transmission',
+            'options': ['Automatic', 'Manual', 'Semi-automatic']
+        },
+        {
+            'label': 'Engine',
+            'options': ['1.0', '1.6', '1,5 - 2.0', '2.0 - 2.9', '3.0 - 3.9', '4.0 or more']
+        },
+        {
+            'label': 'Doors',
+            'options': ['Two Doors', 'Four Doors']
+        }
+        ],
+        'checkbox': ['Car Tax pay', 'With fines', 'From auction', 'Maintenance and warranty', 'Single owner', 'With manual', 'Spare keys', 'Inspections done']
+    },
+    'furniture_Ad': {
+        'name': ['Home Essentials'],
+        'imagem': '/static/assets/image/icons8-lampshade-64 (1).png', 
+        'dropdowns': [ {
+
+            'label': 'Categorys',
+            'options': ['Furniture', 'Home Appliances', 'Building Materials and Garden','Household Utilities', 'Decorative Objects', 'Small Appliances', 'Eletrodomestics', 'others']
+        },
+        {
+
+            'label': 'Condition',
+            'options': ['New', 'Used - Excellent', 'Used - Good','Refurbished', 'Faulty',]
+        }
+        ]
+    },
+    'tech_Ad': {
+        'name': ['Tech Essentials'],
+        'dropdowns': [ {
+
+            'label': 'Type',
+            'options': ['NootBook and Laptops', 'Pcs and Desktops', 'Cellphones','Prints', 'TVs', 'Acessorys', 'Cameras', 'Dvd Players', 'others']
+        },
+        {
+            'label': 'Model',
+            'options': ['LG', 'Samsumg', 'Nokia','Panasonic', 'Motorola', 'Huawei', 'Sony', 'Apple', 'Philips', 'Lenovo', 'Dell', 'Acer', 'Asus', 'Others']
+        }
+        ]
+    },
     'musical_Ad': {'name': 'Musical Instrument'},
     'toys_Ad': {'name': 'Children\'s Items and Toys'},
     'pet_Ad': {'name': 'Pets'},
@@ -19,14 +92,65 @@
     'fashion_Ad': {'name': 'Fashion and Beauty'},
 } %}
 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var styleAd = '{{ ads_type }}'; // My variable will control the patch
+        var imagePath;
+        // I don't know why only works with ..
+        switch (styleAd) {
+            case 'houses_Ad':
+                imagePath = '../static/assets/image/icons8-houses-96.png';
+                break;
+            case 'ownedCars_Ad':
+                imagePath = '../static/assets/image/icons8-traffic-jam-96 (3).png';
+                break;
+            case 'furniture_Ad':
+                imagePath = '../static/assets/image/icons8-lampshade-64 (1).png';
+                break;
+            case 'tech_Ad':
+                imagePath = '../static/assets/image/icons8-laptop-96.png';
+                break;
+            case 'musical_Ad':
+                imagePath = '../static/assets/image/icons8-musical-notes-100.png';
+                break;
+            case 'toys_Ad':
+                imagePath = '../static/assets/image/icons8-toys-64.png';
+                break;
+            case 'pet_Ad':
+                imagePath = '../static/assets/image/icons8-pets-100.png';
+                break;
+            case 'office_Ad':
+                imagePath = '../static/assets/image/icons8-office-100.png';
+                break;
+            case 'fashion_Ad':
+                imagePath = '../static/assets/image/icons8-fashion-100.png';
+                break;
+            case 'games_Ad':
+                imagePath = '../static/assets/image/icons8-fashion-100.png';
+                break;
+            default:
+                imagePath = '../static/assets/favicon/favicon.png';
+        }
+
+        var categoryImage = document.getElementById('categoryImage');
+        if (categoryImage) {
+            categoryImage.src = imagePath;
+        } else {
+            console.error('Image Not Found.');
+        }
+    });
+</script>
+
 <div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block bg-white">
     <div class="card-header bg-dark text-white h-25 text-center">
         <a href="/" class="d-block mx-auto">
-            <img class="img-fluid navbar-brand" src="/static/assets/favicon/favicon.png" alt="Logo" style="width: 10%; min-width: 70px;">
+            <img class="img-fluid navbar-brand" id="categoryImage" alt="Logo" style="width: 8%; min-width: 60px;">
         </a>
         <h4 class="mb-0 tw-bold p-2 ">Let's Start. You are in 
-            {% if ads_type in ads_category_map %} 
-            {{ads_category_map[ads_type]['name']}}
+            {% if ads_type in ads_category_map %}
+            {% set header = ads_category_map[ads_type]['name'][0] %}
+                {{header}}
             {% endif %}
             <emoji>😊</emoji>
         </h4>
@@ -48,159 +172,115 @@
                     <!-- Formulário 2 -->
                     <form class="form py-2 " role="form" autocomplete="off" method="POST" action="/register">
                         <div class="form-group ">
-                            <label for="username" class="text-white">Description * <small class="text-dark">Description of your announce</small></label>
-                            <input type="text" class="form-control border border-dark shadow p-3" id="username" name="username" required style="height: 100px;">
+                            <label for="exampleFormControlTextarea1" class="form-label text-white ">Description * <small class="text-dark">Description of your announce</small></label>
+                            <textarea class="form-control border border-dark shadow" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                     </form>
                     <!-- DropDown-->
-                    {% if ad_type == "houses_Ad" %}
-                    <div class="dropdown pt-3">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Property Type
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <li><a class="dropdown-item" href="#">Apartment</a></li>
-                          <li><a class="dropdown-item" href="#">House</a></li>
-                          <li><a class="dropdown-item" href="#">Studio</a></li>
-                          <li><a class="dropdown-item" href="#">Loft</a></li>
-                          <li><a class="dropdown-item" href="#">Penthouse</a></li>
-                        </ul>
-                      </div>
-                      {% endif %}
+                    <!--Metadat-->
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad'] %}
+                        {% set firstDropdown = ads_category_map[ads_type]['dropdowns'][0] %}
+                            <label for="exampleDataList" class="form-label text-white pt-4">{{ firstDropdown['label']}}</label>
+                            <input class="form-control border border-dark shadow" list="firstDataList" id="exampleDataList" placeholder="Type to search...">
+                            <datalist id="firstDataList">
+                                {% for option in firstDropdown['options'] %}
+                                    <option value="{{ option }}">
+                                {% endfor %}
+                            </datalist>
+                    {% endif %}
                     <!---->
                     <!-- RENT OR SELLING-->
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
                     <div class="form-group pt-4">
                         <div class="form-check">
                             <input type="radio" class="form-check-input" id="acceptTerms1" name="acceptTerms" required>
                             <label class="form-check-label text-white" for="acceptTerms1">
-                                I am listing this property for sale.
+                                I am listing for sale.
 
                             </label>
                         </div>
                         <div class="form-check">
                             <input type="radio" class="form-check-input" id="acceptTerms2" name="acceptTerms" required>
                             <label class="form-check-label text-white" for="acceptTerms2">
-                                I am listing this property for rent.
+                                I am listing for rent.
                             </label>
                         </div>
-                    </div>                    
+                    </div>
+                    {% endif %}                    
                     <!-- END rent selling-->
                     <!-- Rooms Dropdown-->
-                    <div class="dropdown pt-3">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Numbers of rooms
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <li><a class="dropdown-item" href="#">1</a></li>
-                          <li><a class="dropdown-item" href="#">2</a></li>
-                          <li><a class="dropdown-item" href="#">3</a></li>
-                          <li><a class="dropdown-item" href="#">4</a></li>
-                          <li><a class="dropdown-item" href="#">5 or more</a></li>
-                        </ul>
-                      </div>
+                    <!--Metadat-->
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad'] %}
+                        {% set secondDropdown = ads_category_map[ads_type]['dropdowns'][1] %}
+                            <label for="exampleDataList" class="form-label text-white pt-4">{{ secondDropdown['label']}}</label>
+                            <input class="form-control border border-dark shadow" list="secondDataList" id="exampleDataList" placeholder="Type to search...">
+                            <datalist id="secondDataList">
+                                {% for option in secondDropdown['options'] %}
+                                    <option value="{{ option }}">
+                                {% endfor %}
+                            </datalist>
+                    {% endif %}
                     <!---->
                     <!-- bathroom -->
-                    <div class="dropdown pt-3">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Numbers of bathroom
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                          <li><a class="dropdown-item" href="#">1</a></li>
-                          <li><a class="dropdown-item" href="#">2</a></li>
-                          <li><a class="dropdown-item" href="#">3</a></li>
-                          <li><a class="dropdown-item" href="#">4</a></li>
-                          <li><a class="dropdown-item" href="#">5 or more</a></li>
-                        </ul>
-                      </div>
+                    <!--Metadat-->
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                        {% set thirdDropdown = ads_category_map[ads_type]['dropdowns'][2] %}
+                            <label for="exampleDataList" class="form-label text-white pt-4">{{ thirdDropdown['label']}}</label>
+                            <input class="form-control border border-dark shadow" list="thirdDataList" id="exampleDataList" placeholder="Type to search...">
+                            <datalist id="thirdDataList">
+                                {% for option in thirdDropdown['options'] %}
+                                    <option value="{{ option }}">
+                                {% endfor %}
+                            </datalist>
+                    {% endif %}
                     <!---->
                     <!-- From 3-->
-                    <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
-                        <div class="form-group">
-                            <label for="title" class="text-white ">Area (sq ft) * <small class="text-dark">Area of the property</small></label>
-                            <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
-                        </div>
-                    </form>
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                    {% set formname_1 = ads_category_map[ads_type]['name'][1] %}
+                        <form class="form py-4" role="form" autocomplete="off" method="POST" action="/register">
+                            <div class="form-group">
+                                <label for="title" class="text-white ">{{formname_1}} <small class="text-dark"></small></label>
+                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                            </div>
+                        </form>
+                    {% endif %}
                     <!---->
                     <!-- bathroom -->
-                    <div class="dropdown pt-2">
-                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Garage Space:
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">0</a></li>
-                            <li><a class="dropdown-item" href="#">1</a></li>
-                            <li><a class="dropdown-item" href="#">2</a></li>
-                            <li><a class="dropdown-item" href="#">3 or more</a></li>
-                        </ul>
-                        </div>
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                        {% set forthDropdown = ads_category_map[ads_type]['dropdowns'][3] %}
+                            <label for="exampleDataList" class="form-label text-white pt-4">{{ forthDropdown['label']}}</label>
+                            <input class="form-control border border-dark shadow" list="forthDataList" id="exampleDataList" placeholder="Type to search...">
+                            <datalist id="forthDataList">
+                                {% for option in forthDropdown['options'] %}
+                                    <option value="{{ option }}">
+                                {% endfor %}
+                            </datalist>
+                    {% endif %}
                     <!---->
                     <!-- checkboxes -->
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                        {% set forthDropdown = ads_category_map[ads_type]['dropdowns'][3] %}
+                    {% endif %}
                     <div class="form-group pt-4">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="airConditioning" name="amenities[]" value="airConditioning">
-                                    <label class="form-check-label text-white" for="airConditioning">
-                                        Air Conditioning
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="grill" name="amenities[]" value="grill">
-                                    <label class="form-check-label text-white" for="grill">
-                                        Grill / Barbecue
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
-                                    <label class="form-check-label text-white" for="rental">
-                                        Laundry Room
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
-                                    <label class="form-check-label text-white" for="rental">
-                                        Balcony
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
-                                    <label class="form-check-label text-white" for="rental">
-                                        Maid's Room
-                                    </label>
-                                </div>
-                                <!--  -->
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="laundry" name="amenities[]" value="laundry">
-                                    <label class="form-check-label text-white" for="laundry">
-                                        Laundry Room
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="balcony" name="amenities[]" value="balcony">
-                                    <label class="form-check-label text-white" for="balcony">
-                                        Balcony
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
-                                    <label class="form-check-label text-white" for="rental">
-                                        Walk-in Closets
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="rental" name="listingTypes[]" value="rental">
-                                    <label class="form-check-label text-white" for="rental">
-                                        Kitchen Cabinets
-                                    </label>
-                                </div>
-                                <!---->
+                                {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                                    {% set checkboxes = ads_category_map[ads_type]['checkbox'] %}
+                                    {% for option in checkboxes %}
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="{{ option|lower }}" name="amenities[]" value="{{ option|lower }}">
+                                            <label class="form-check-label text-white" for="{{ option|lower }}">
+                                                {{ option }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            <!---->
                             </div>
                                 <!-- From price-->
                                 <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
                                     <div class="form-group">
-                                        <label for="title" class="text-white ">Price * <small class="text-dark">Property price</small></label>
+                                        <label for="title" class="text-white ">Price *</label>
                                         <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
                                     </div>
                                 </form>
@@ -208,22 +288,22 @@
                                 <!--images-->
                                 <form action="/upload" method="post" enctype="multipart/form-data">
                                     <div class="mb-3">
-                                        <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                                        <input class="form-control" type="file" id="formFileMultiple" name="files[]" multiple>
+                                        <label for="formFileMultiple" class="form-label text-white">Multiple files input example</label>
+                                        <input class="form-control border border-dark shadow " type="file" id="formFileMultiple" name="files[]" multiple>
                                     </div>
                                     <button class="btn btn-primary" type="submit">Upload</button>
                                 </form>
                                 <!--Adress-->
                                 <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
                                     <div class="form-group">
-                                        <label for="title" class="text-white ">Adress* <small class="text-dark">Property Localization</small></label>
+                                        <label for="title" class="text-white ">Adress* <small class="text-dark">Localization</small></label>
                                         <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
                                     </div>
                                 </form>
                                 <!-- TEL-->
                                 <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
                                     <div class="form-group">
-                                        <label for="telefone" class="form-label" id="telefone" name="telefone" placeholder="Digit your cell number" required><small class="text-white">Cel Number</small></label>
+                                        <label for="telefone" class="form-label" id="telefone" name="telefone" placeholder="Digit your cell number" required><small class="text-white">Contact</small></label>
                                         <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
                                     </div>
                                 </form>
