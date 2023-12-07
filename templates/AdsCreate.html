@@ -82,14 +82,79 @@
         {
             'label': 'Model',
             'options': ['LG', 'Samsumg', 'Nokia','Panasonic', 'Motorola', 'Huawei', 'Sony', 'Apple', 'Philips', 'Lenovo', 'Dell', 'Acer', 'Asus', 'Others']
+        },
+        {
+
+            'label': 'Condition',
+            'options': ['New', 'Used - Excellent', 'Used - Good','Refurbished', 'Faulty',]
         }
         ]
     },
-    'musical_Ad': {'name': 'Musical Instrument'},
-    'toys_Ad': {'name': 'Children\'s Items and Toys'},
-    'pet_Ad': {'name': 'Pets'},
-    'office_Ad': {'name': 'Commerce and office'},
-    'fashion_Ad': {'name': 'Fashion and Beauty'},
+    'musical_Ad': {
+        'name': ['Musical Instrument'],
+        'dropdowns': [ {
+            'label': 'Type',
+            'options': ['Guitar', 'Eletric Guitar', 'Drums','Keyboards and Piano', 'Violins and Cellos', 'Wind Instruments', 'Amplifiers', 'Microphones', 'Acessories', 'others']
+        },
+        {
+            'label': 'Model',
+            'options': ['Fender', 'Gibson', 'Taylor','Martin', 'Pearl', 'Yamaha', 'Roland', 'Vox', 'Others']
+        },
+        {
+
+            'label': 'Condition',
+            'options': ['New', 'Used - Excellent', 'Used - Good','Refurbished', 'Faulty',]
+        }
+        ]
+    },
+    'toys_Ad': {
+        'name': ['Children\'s Items and Toys'],
+        'dropdowns': [ {
+            'label': 'Type',
+            'options': ['Clothing and Footwear,', ' Toys and Game', 'Strollers and Chairs','Crib and Nursery']
+        },
+        {
+
+            'label': 'Condition',
+            'options': ['New', 'Used - Excellent', 'Used - Good','Refurbished', 'Faulty',]
+        }
+        ]
+    },
+    'pet_Ad': {
+        'name': ['Pets'],
+        'dropdowns': [ {
+            'label': 'Type',
+            'options': ['Pet Houses and Beds,', 'Pet Toys', 'Feeding and Bowls','Clothing and Accessories', 'Pet Carriers', 'Hygiene and Health Products', 'Cages and Aquariums', 'Training Equipment', 'Specific Cat Products', 'Others']
+        },
+        {
+
+            'label': 'Condition',
+            'options': ['New', 'Used - Excellent', 'Used - Good','Refurbished', 'Faulty',]
+        }
+        ]
+    },
+    'office_Ad': {'name': ['Commerce and office']},
+    'fashion_Ad': {
+        'name': ['Fashion and Beauty'],
+        'dropdowns': [ {
+            'label': 'Type',
+            'options': ['Beauty and Health,', 'Clothing', 'Bags, Suitcases, and Backpacks','Accessories', 'Footwear', 'Others']
+        }
+        ]
+    },
+    'games_Ad': { 
+        'name': ['Games'],
+        'dropdowns': [ {
+            'label': 'Type',
+            'options': ['Video Game Consoles,', 'Games', 'Controls','Acessories', 'Others']
+        },
+        {
+
+            'label': 'Condition',
+            'options': ['New', 'Used - Excellent', 'Used - Good','Refurbished', 'Faulty',]
+        }
+        ]
+    }
 } %}
 
 
@@ -127,7 +192,7 @@
                 imagePath = '../static/assets/image/icons8-fashion-100.png';
                 break;
             case 'games_Ad':
-                imagePath = '../static/assets/image/icons8-fashion-100.png';
+                imagePath = '../static/assets/image/icons8-controller-100.png';
                 break;
             default:
                 imagePath = '../static/assets/favicon/favicon.png';
@@ -144,7 +209,7 @@
 
 <div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block bg-white">
     <div class="card-header bg-dark text-white h-25 text-center">
-        <a href="/" class="d-block mx-auto">
+        <a href="/announce" class="d-block mx-auto">
             <img class="img-fluid navbar-brand" id="categoryImage" alt="Logo" style="width: 8%; min-width: 60px;">
         </a>
         <h4 class="mb-0 tw-bold p-2 ">Let's Start. You are in 
@@ -177,8 +242,8 @@
                         </div>
                     </form>
                     <!-- DropDown-->
-                    <!--Metadat-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad'] %}
+                    <!--Metadat Type-->
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad', 'musical_Ad', 'toys_Ad', 'pet_Ad','fashion_Ad', 'games_Ad'] %}
                         {% set firstDropdown = ads_category_map[ads_type]['dropdowns'][0] %}
                             <label for="exampleDataList" class="form-label text-white pt-4">{{ firstDropdown['label']}}</label>
                             <input class="form-control border border-dark shadow" list="firstDataList" id="exampleDataList" placeholder="Type to search...">
@@ -210,7 +275,7 @@
                     <!-- END rent selling-->
                     <!-- Rooms Dropdown-->
                     <!--Metadat-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad'] %}
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad', 'musical_Ad', 'toys_Ad', 'pet_Ad', 'games_Ad'] %}
                         {% set secondDropdown = ads_category_map[ads_type]['dropdowns'][1] %}
                             <label for="exampleDataList" class="form-label text-white pt-4">{{ secondDropdown['label']}}</label>
                             <input class="form-control border border-dark shadow" list="secondDataList" id="exampleDataList" placeholder="Type to search...">
@@ -223,7 +288,7 @@
                     <!---->
                     <!-- bathroom -->
                     <!--Metadat-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'tech_Ad', 'musical_Ad'] %}
                         {% set thirdDropdown = ads_category_map[ads_type]['dropdowns'][2] %}
                             <label for="exampleDataList" class="form-label text-white pt-4">{{ thirdDropdown['label']}}</label>
                             <input class="form-control border border-dark shadow" list="thirdDataList" id="exampleDataList" placeholder="Type to search...">
