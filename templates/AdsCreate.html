@@ -228,157 +228,160 @@
             <div class="col-12 col-lg-6">
                 <div class="card-body mx-3">
                     <!-- Formulário 1 -->
-                    <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
+                    <form class="form py-3" role="form" autocomplete="off" method="POST" action="/adsCreate">
                         <div class="form-group">
                             <label for="title" class="text-white ">Title * <small class="text-dark">Title of your announce</small></label>
                             <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
                         </div>
-                    </form>
-                    <!-- Formulário 2 -->
-                    <form class="form py-2 " role="form" autocomplete="off" method="POST" action="/register">
-                        <div class="form-group ">
-                            <label for="exampleFormControlTextarea1" class="form-label text-white ">Description * <small class="text-dark">Description of your announce</small></label>
-                            <textarea class="form-control border border-dark shadow" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <input type="hidden" name="ads_type" value="{{ads_type}}">
+                    
+                        <!-- Description-->
+                    
+                        <div class="form-group pt-3 ">
+                            <label for="exampleFormControlTextarea1" name="description" class="form-label text-white ">Description * <small class="text-dark">Description of your announce</small></label>
+                            <textarea name="description" class="form-control border border-dark shadow" id="textArea" rows="3"></textarea>
                         </div>
-                    </form>
-                    <!-- DropDown-->
-                    <!--Metadat Type-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad', 'musical_Ad', 'toys_Ad', 'pet_Ad','fashion_Ad', 'games_Ad'] %}
-                        {% set firstDropdown = ads_category_map[ads_type]['dropdowns'][0] %}
-                            <label for="exampleDataList" class="form-label text-white pt-4">{{ firstDropdown['label']}}</label>
-                            <input class="form-control border border-dark shadow" list="firstDataList" id="exampleDataList" placeholder="Type to search...">
-                            <datalist id="firstDataList">
-                                {% for option in firstDropdown['options'] %}
-                                    <option value="{{ option }}">
-                                {% endfor %}
-                            </datalist>
-                    {% endif %}
-                    <!---->
-                    <!-- RENT OR SELLING-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
-                    <div class="form-group pt-4">
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" id="acceptTerms1" name="acceptTerms" required>
-                            <label class="form-check-label text-white" for="acceptTerms1">
-                                I am listing for sale.
-
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" id="acceptTerms2" name="acceptTerms" required>
-                            <label class="form-check-label text-white" for="acceptTerms2">
-                                I am listing for rent.
-                            </label>
-                        </div>
-                    </div>
-                    {% endif %}                    
-                    <!-- END rent selling-->
-                    <!-- Rooms Dropdown-->
-                    <!--Metadat-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad', 'musical_Ad', 'toys_Ad', 'pet_Ad', 'games_Ad'] %}
-                        {% set secondDropdown = ads_category_map[ads_type]['dropdowns'][1] %}
-                            <label for="exampleDataList" class="form-label text-white pt-4">{{ secondDropdown['label']}}</label>
-                            <input class="form-control border border-dark shadow" list="secondDataList" id="exampleDataList" placeholder="Type to search...">
-                            <datalist id="secondDataList">
-                                {% for option in secondDropdown['options'] %}
-                                    <option value="{{ option }}">
-                                {% endfor %}
-                            </datalist>
-                    {% endif %}
-                    <!---->
-                    <!-- bathroom -->
-                    <!--Metadat-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'tech_Ad', 'musical_Ad'] %}
-                        {% set thirdDropdown = ads_category_map[ads_type]['dropdowns'][2] %}
-                            <label for="exampleDataList" class="form-label text-white pt-4">{{ thirdDropdown['label']}}</label>
-                            <input class="form-control border border-dark shadow" list="thirdDataList" id="exampleDataList" placeholder="Type to search...">
-                            <datalist id="thirdDataList">
-                                {% for option in thirdDropdown['options'] %}
-                                    <option value="{{ option }}">
-                                {% endfor %}
-                            </datalist>
-                    {% endif %}
-                    <!---->
-                    <!-- From 3-->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
-                    {% set formname_1 = ads_category_map[ads_type]['name'][1] %}
-                        <form class="form py-4" role="form" autocomplete="off" method="POST" action="/register">
-                            <div class="form-group">
-                                <label for="title" class="text-white ">{{formname_1}} <small class="text-dark"></small></label>
-                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
-                            </div>
-                        </form>
-                    {% endif %}
-                    <!---->
-                    <!-- bathroom -->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
-                        {% set forthDropdown = ads_category_map[ads_type]['dropdowns'][3] %}
-                            <label for="exampleDataList" class="form-label text-white pt-4">{{ forthDropdown['label']}}</label>
-                            <input class="form-control border border-dark shadow" list="forthDataList" id="exampleDataList" placeholder="Type to search...">
-                            <datalist id="forthDataList">
-                                {% for option in forthDropdown['options'] %}
-                                    <option value="{{ option }}">
-                                {% endfor %}
-                            </datalist>
-                    {% endif %}
-                    <!---->
-                    <!-- checkboxes -->
-                    {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
-                        {% set forthDropdown = ads_category_map[ads_type]['dropdowns'][3] %}
-                    {% endif %}
-                    <div class="form-group pt-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
-                                    {% set checkboxes = ads_category_map[ads_type]['checkbox'] %}
-                                    {% for option in checkboxes %}
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="{{ option|lower }}" name="amenities[]" value="{{ option|lower }}">
-                                            <label class="form-check-label text-white" for="{{ option|lower }}">
-                                                {{ option }}
-                                            </label>
-                                        </div>
+                   
+                        <!-- DropDown-->
+                        <!--Metadat Type-->
+                        {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad', 'musical_Ad', 'toys_Ad', 'pet_Ad','fashion_Ad', 'games_Ad'] %}
+                    
+                            {% set firstDropdown = ads_category_map[ads_type]['dropdowns'][0] %}
+                                <label for="firstDataList" class="form-label text-white pt-4">{{ firstDropdown['label']}}</label>
+                                <input class="form-control border border-dark shadow" list="firstDataList" id="exampleDataList" placeholder="Type to search...">
+                                <datalist id="firstDataList">
+                                    {% for option in firstDropdown['options'] %}
+                                        <option value="{{ option }}">
                                     {% endfor %}
-                                {% endif %}
+                                </datalist>
+                    
+                        {% endif %}
+                            <!---->
+                            <!-- RENT OR SELLING-->
+                            {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                            <div class="form-group pt-4">
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="acceptTerms1" name="acceptTerms" required>
+                                    <label class="form-check-label text-white" for="acceptTerms1">
+                                        I am listing for sale.
+
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" class="form-check-input" id="acceptTerms2" name="acceptTerms" required>
+                                    <label class="form-check-label text-white" for="acceptTerms2">
+                                        I am listing for rent.
+                                    </label>
+                                </div>
+                            </div>
+                            {% endif %}                    
+                            <!-- END rent selling-->
+                            <!-- Rooms Dropdown-->
+                            <!--Metadat-->
+                            {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad', 'musical_Ad', 'toys_Ad', 'pet_Ad', 'games_Ad'] %}
+                            {% set secondDropdown = ads_category_map[ads_type]['dropdowns'][1] %}
+                                    <label for="secondDataList" class="form-label text-white pt-4">{{ secondDropdown['label']}}</label>
+                                    <input class="form-control border border-dark shadow" list="secondDataList" id="exampleDataList" placeholder="Type to search...">
+                                    <datalist id="secondDataList">
+                                        {% for option in secondDropdown['options'] %}
+                                            <option value="{{ option }}">
+                                        {% endfor %}
+                                    </datalist>
+                
+                            {% endif %}
+                            <!---->
+                            <!-- bathroom -->
+                            <!--Metadat-->
+                            {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'tech_Ad', 'musical_Ad'] %}
+                                {% set thirdDropdown = ads_category_map[ads_type]['dropdowns'][2] %}
+                                    <label for="exampleDataList" class="form-label text-white pt-4">{{ thirdDropdown['label']}}</label>
+                                    <input class="form-control border border-dark shadow" list="thirdDataList" id="exampleDataList" placeholder="Type to search...">
+                                    <datalist id="thirdDataList">
+                                        {% for option in thirdDropdown['options'] %}
+                                            <option value="{{ option }}">
+                                        {% endfor %}
+                                    </datalist>
+                            {% endif %}
+                            <!---->
+                            <!-- From 3-->
+                            {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                            {% set formname_1 = ads_category_map[ads_type]['name'][1] %}
+                            
+                                    <div class="form-group">
+                                        <label for="title" class="text-white ">{{formname_1}} <small class="text-dark"></small></label>
+                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                                    </div>
+
+                            {% endif %}
+                            <!---->
+                            <!-- bathroom -->
+                            {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                                {% set forthDropdown = ads_category_map[ads_type]['dropdowns'][3] %}
+                                    <label for="exampleDataList" class="form-label text-white pt-4">{{ forthDropdown['label']}}</label>
+                                    <input class="form-control border border-dark shadow" list="forthDataList" id="exampleDataList" placeholder="Type to search...">
+                                    <datalist id="forthDataList">
+                                        {% for option in forthDropdown['options'] %}
+                                            <option value="{{ option }}">
+                                        {% endfor %}
+                                    </datalist>
+                            {% endif %}
+                            <!---->
+                            <!-- checkboxes -->
+                            {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                                {% set forthDropdown = ads_category_map[ads_type]['dropdowns'][3] %}
+                            {% endif %}
+                            <div class="form-group pt-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
+                                            {% set checkboxes = ads_category_map[ads_type]['checkbox'] %}
+                                            {% for option in checkboxes %}
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="{{ option|lower }}" name="amenities[]" value="{{ option|lower }}">
+                                                    <label class="form-check-label text-white" for="{{ option|lower }}">
+                                                        {{ option }}
+                                                    </label>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
                             <!---->
                             </div>
-                                <!-- From price-->
-                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
-                                    <div class="form-group">
-                                        <label for="title" class="text-white ">Price *</label>
-                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
-                                    </div>
-                                </form>
-                                <!---->
-                                <!--images-->
-                                <form action="/upload" method="post" enctype="multipart/form-data">
-                                    <div class="mb-3">
-                                        <label for="formFileMultiple" class="form-label text-white">Multiple files input example</label>
-                                        <input class="form-control border border-dark shadow " type="file" id="formFileMultiple" name="files[]" multiple>
-                                    </div>
-                                    <button class="btn btn-primary" type="submit">Upload</button>
-                                </form>
-                                <!--Adress-->
-                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
-                                    <div class="form-group">
-                                        <label for="title" class="text-white ">Adress* <small class="text-dark">Localization</small></label>
-                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
-                                    </div>
-                                </form>
-                                <!-- TEL-->
-                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
-                                    <div class="form-group">
-                                        <label for="telefone" class="form-label" id="telefone" name="telefone" placeholder="Digit your cell number" required><small class="text-white">Contact</small></label>
-                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
-                                    </div>
-                                </form>
-                                <!-- send -->
-                                <form class="form py-3" role="form" autocomplete="off" method="POST" action="/register">
-                                    <button class="btn btn-primary" type="submit">Submit</button>
-                                </form>
+                            <!-- From price-->
+                            <div class="form-group">
+                                <label for="title" class="text-white ">Price *</label>
+                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                            </div>
+            
+                            <!---->
+                            <!--images-->
+                        
+                            <div class="mb-3">
+                                <label for="formFileMultiple" class="form-label text-white">Multiple files input example</label>
+                                <input class="form-control border border-dark shadow " type="file" id="formFileMultiple" name="files[]" multiple>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Upload</button>
+
+                        <!--Adress-->
+                        
+                            <div class="form-group">
+                                <label for="title" class="text-white ">Adress* <small class="text-dark">Localization</small></label>
+                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                            </div>
+
+                        <!-- TEL-->
+                        
+                            <div class="form-group">
+                                <label for="telefone" class="form-label" id="telefone" name="telefone" placeholder="Digit your cell number" required><small class="text-white">Contact</small></label>
+                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                            </div>
+
+                        <!-- send -->
+                        
+                            <button class="btn btn-primary" type="submit">Submit</button>
+
                         </div>
                     </div>
-                    
+                </form>
                     <!---->
                 </div>
             </div>

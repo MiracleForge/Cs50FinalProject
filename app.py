@@ -47,9 +47,9 @@ def index():
         
         result = db.execute("SELECT username FROM autenticacao WHERE id = ?", (user_id,))
         display_username = result[0]["username"] if result else None
-        return render_template("layout.html", display_username=display_username)
+        return render_template("index.html", display_username=display_username)
 
-    return render_template("layout.html")
+    return render_template("index.html")
 
 
 #Login routes
@@ -194,6 +194,33 @@ def announce():
 
     return render_template("announce.html", error=error_message)
 
+
+@app.route("/adsCreate", methods=['POST'])
+@login_required
+def adCreationDB():
+    ad_types_allowed = ['houses_Ad', "ownedCars_Ad", "furniture_Ad", "tech_Ad", "musical_Ad", "toys_Ad", "pet_Ad", "office_Ad", "fashion_Ad", "games_Ad"]
+    error_message = None
+
+    hiddenTitle = request.form.get('ads_type')
+    
+    if hiddenTitle not in ad_types_allowed:
+        error_message = "400 - Ad_type_notAllowed"
+    else:
+
+            user_onSection = session['user_id']
+
+            adTittle = request.form.get('title')
+            adDescription = request.form.get('description')
+            if adTittle:
+                print(adTittle, adDescription, hiddenTitle, user_onSection)
+
+                db.execute("INSERT INTO announces (titulo, descricao, tipo_de_anuncio, user_id) VALUES (?, ?, ?, ?)",
+                           adTittle, adDescription, hiddenTitle, user_onSection)
+
+                flash("Announce Create Successiful")
+                return redirect("/")
+
+    return render_template("AdsCreate.html", error=error_message)
 
 
 

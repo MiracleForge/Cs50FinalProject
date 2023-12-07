@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    AdsCreate
+{% endblock %}
+
+{% block main %}
+<div class="container-xxl d-flex flex-column">
+    <!-- Messages-->
+    {% if error %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="alert alert-danger flash-alert text-center" role="alert">
+                    {{ error }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+    {% if success_message %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="alert alert-success flash-alert text-center" role="alert">
+                    {{ success_message }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
