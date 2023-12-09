@@ -232,11 +232,10 @@
                         <div class="form-group">
                             <label for="title" class="text-white ">Title * <small class="text-dark">Title of your announce</small></label>
                             <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
-                        </div>
-                        <input type="hidden" name="ads_type" value="{{ads_type}}">
-                    
+                        </div> 
+                            <input type="hidden" name="ads_type" value="{{ads_type}}">
+
                         <!-- Description-->
-                    
                         <div class="form-group pt-3 ">
                             <label for="exampleFormControlTextarea1" name="description" class="form-label text-white ">Description * <small class="text-dark">Description of your announce</small></label>
                             <textarea name="description" class="form-control border border-dark shadow" id="textArea" rows="3"></textarea>
@@ -248,40 +247,38 @@
                     
                             {% set firstDropdown = ads_category_map[ads_type]['dropdowns'][0] %}
                                 <label for="firstDataList" class="form-label text-white pt-4">{{ firstDropdown['label']}}</label>
-                                <input class="form-control border border-dark shadow" list="firstDataList" id="exampleDataList" placeholder="Type to search...">
+                                <input class="form-control border border-dark shadow" name="firstDataList" list="firstDataList" id="exampleDataList" placeholder="Type to search...">
                                 <datalist id="firstDataList">
                                     {% for option in firstDropdown['options'] %}
                                         <option value="{{ option }}">
                                     {% endfor %}
                                 </datalist>
-                    
                         {% endif %}
                             <!---->
                             <!-- RENT OR SELLING-->
                             {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
                             <div class="form-group pt-4">
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="acceptTerms1" name="acceptTerms" required>
-                                    <label class="form-check-label text-white" for="acceptTerms1">
+                                    <input type="radio" class="form-check-input" id="rentOrSellchecklist1" name="rentOrSellchecklist" value="forSale" required>
+                                    <label class="form-check-label text-white" for="rentOrSellchecklist1">
                                         I am listing for sale.
-
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" class="form-check-input" id="acceptTerms2" name="acceptTerms" required>
-                                    <label class="form-check-label text-white" for="acceptTerms2">
+                                    <input type="radio" class="form-check-input" id="rentOrSellchecklist2" name="rentOrSellchecklist" value="forRent" required>
+                                    <label class="form-check-label text-white" for="rentOrSellchecklist2">
                                         I am listing for rent.
                                     </label>
                                 </div>
                             </div>
-                            {% endif %}                    
+                            {% endif %}                                              
                             <!-- END rent selling-->
                             <!-- Rooms Dropdown-->
                             <!--Metadat-->
                             {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'furniture_Ad', 'tech_Ad', 'musical_Ad', 'toys_Ad', 'pet_Ad', 'games_Ad'] %}
                             {% set secondDropdown = ads_category_map[ads_type]['dropdowns'][1] %}
                                     <label for="secondDataList" class="form-label text-white pt-4">{{ secondDropdown['label']}}</label>
-                                    <input class="form-control border border-dark shadow" list="secondDataList" id="exampleDataList" placeholder="Type to search...">
+                                    <input class="form-control border border-dark shadow" name="secondDataList" list="secondDataList" id="exampleDataList" placeholder="Type to search...">
                                     <datalist id="secondDataList">
                                         {% for option in secondDropdown['options'] %}
                                             <option value="{{ option }}">
@@ -294,8 +291,8 @@
                             <!--Metadat-->
                             {% if ads_type in ['houses_Ad', 'ownedCars_Ad', 'tech_Ad', 'musical_Ad'] %}
                                 {% set thirdDropdown = ads_category_map[ads_type]['dropdowns'][2] %}
-                                    <label for="exampleDataList" class="form-label text-white pt-4">{{ thirdDropdown['label']}}</label>
-                                    <input class="form-control border border-dark shadow" list="thirdDataList" id="exampleDataList" placeholder="Type to search...">
+                                    <label for="thirdDataList" class="form-label text-white pt-4">{{ thirdDropdown['label']}}</label>
+                                    <input class="form-control border border-dark shadow" name="thirdDataList" list="thirdDataList" id="exampleDataList" placeholder="Type to search...">
                                     <datalist id="thirdDataList">
                                         {% for option in thirdDropdown['options'] %}
                                             <option value="{{ option }}">
@@ -307,9 +304,9 @@
                             {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
                             {% set formname_1 = ads_category_map[ads_type]['name'][1] %}
                             
-                                    <div class="form-group">
-                                        <label for="title" class="text-white ">{{formname_1}} <small class="text-dark"></small></label>
-                                        <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                                    <div class="form-group pt-4">
+                                        <label for="tirthForm" class="text-white ">{{formname_1}} <small class="text-dark"></small></label>
+                                        <input type="text" class="form-control border border-dark shadow " id="tirthForm" name="tirthForm" required>
                                     </div>
 
                             {% endif %}
@@ -337,7 +334,7 @@
                                             {% set checkboxes = ads_category_map[ads_type]['checkbox'] %}
                                             {% for option in checkboxes %}
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="{{ option|lower }}" name="amenities[]" value="{{ option|lower }}">
+                                                    <input type="checkbox" class="form-check-input" id="{{ option|lower }}" name="principalCheckList[]" value="{{ option|lower }}">
                                                     <label class="form-check-label text-white" for="{{ option|lower }}">
                                                         {{ option }}
                                                     </label>
@@ -347,37 +344,40 @@
                             <!---->
                             </div>
                             <!-- From price-->
-                            <div class="form-group">
-                                <label for="title" class="text-white ">Price *</label>
-                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                            <div class="form-group pt-4">
+                                <label for="forthForm" class="text-white ">Price *</label>
+                                <input type="text" class="form-control border border-dark shadow " id="forthForm" name="forthForm" required>
                             </div>
             
                             <!---->
                             <!--images-->
                         
-                            <div class="mb-3">
-                                <label for="formFileMultiple" class="form-label text-white">Multiple files input example</label>
+                            <div class="mb-3 pt-4">
+                                <label for="formFileMultiple" class="form-label text-white ">Multiple files input example</label>
                                 <input class="form-control border border-dark shadow " type="file" id="formFileMultiple" name="files[]" multiple>
+                                <div class="pt-2">
+                                    <button class="btn btn-primary" type="submit">Upload</button>
+                                </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Upload</button>
 
                         <!--Adress-->
                         
-                            <div class="form-group">
+                            <div class="form-group pt-4">
                                 <label for="title" class="text-white ">Adress* <small class="text-dark">Localization</small></label>
-                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                                <input type="text" class="form-control border border-dark shadow " id="fifthForm" name="fifthForm" required>
                             </div>
 
                         <!-- TEL-->
                         
-                            <div class="form-group">
+                            <div class="form-group pt-4">
                                 <label for="telefone" class="form-label" id="telefone" name="telefone" placeholder="Digit your cell number" required><small class="text-white">Contact</small></label>
-                                <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
+                                <input type="text" class="form-control border border-dark shadow " id="sixthForm" name="sixthForm" required>
                             </div>
 
                         <!-- send -->
-                        
-                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <div class="pt-3">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
 
                         </div>
                     </div>

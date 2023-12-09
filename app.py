@@ -7,7 +7,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import re
 
-from helpers import login_required
+from helpers import login_required, validate_ad_type, get_non_empty_fields
+
+MAX_TITLE_LENGTH = 60
+MAX_DESCRYPTION_LENGTH = 200
+
 app = Flask(__name__) 
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -173,6 +177,7 @@ def myads():
         else:
             return render_template("login.html")
         
+        
 #trying to work with git
 @app.route("/announce", methods=["GET", "POST"])
 @login_required
@@ -195,32 +200,42 @@ def announce():
     return render_template("announce.html", error=error_message)
 
 
+
+
 @app.route("/adsCreate", methods=['POST'])
 @login_required
 def adCreationDB():
-    ad_types_allowed = ['houses_Ad', "ownedCars_Ad", "furniture_Ad", "tech_Ad", "musical_Ad", "toys_Ad", "pet_Ad", "office_Ad", "fashion_Ad", "games_Ad"]
+    hidden_type = request.form.get('ads_type')
+    user_onSection = session['user_id']
     error_message = None
 
-    hiddenTitle = request.form.get('ads_type')
-    
-    if hiddenTitle not in ad_types_allowed:
-        error_message = "400 - Ad_type_notAllowed"
-    else:
+    if validate_ad_type(hidden_type) and user_onSection:
 
-            user_onSection = session['user_id']
+        form_fields = get_non_empty_fields(request,
+            'title', 'description', 'firstDataList', 'secondDataList',
+            'thirdDataList', 'tirthForm', 'forthForm', 'fifthForm',
+            'sixthForm', 'rentOrSellchecklist', 'checkList', 'principalCheckList'
+        )
 
-            adTittle = request.form.get('title')
-            adDescription = request.form.get('description')
-            if adTittle:
-                print(adTittle, adDescription, hiddenTitle, user_onSection)
+        if hidden_type == 'houses_Ad':
+            convert_type = 'RealState'
+        # Inserir anúncio na tabela announces
+        db.execute('INSERT INTO announces (title, description, announcement_type, user_id) VALUES (?, ?, ?, ?)',
+                    form_fields['title'], form_fields['description'], convert_type, user_onSection)
 
-                db.execute("INSERT INTO announces (titulo, descricao, tipo_de_anuncio, user_id) VALUES (?, ?, ?, ?)",
-                           adTittle, adDescription, hiddenTitle, user_onSection)
+        # Obter o ID do último anúncio inserido
+        result = db.execute('SELECT id FROM announces ORDER BY id DESC LIMIT 1')
+        announce_id = result[0]['id'] if result else None
 
-                flash("Announce Create Successiful")
-                return redirect("/")
+        if announce_id is not None and hidden_type == 'houses_Ad':
+        # Inserir detalhes específicos para anúncios do tipo RealState na tabela RealState
+            db.execute('INSERT INTO RealState (PropertyType, RentSale, NumberOfBathrooms, AreaM2, GarageSpace, DependenciesID, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
+                        form_fields['tirthForm'], form_fields['secondDataList'], None, form_fields['forthForm'],
+                        None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id)
 
     return render_template("AdsCreate.html", error=error_message)
 
 
 
+               
