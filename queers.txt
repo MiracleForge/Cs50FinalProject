@@ -41,11 +41,125 @@ CREATE TABLE RealState (
 
 
 
+CREATE TABLE HomeEssentials(
+    id INTEGER PRIMARY KEY,
+    Categorys TEXT,
+    Conditions TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE TechEssentials(
+    id INTEGER PRIMARY KEY,
+    Type TEXT,
+    Model TEXT,
+    Conditions TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE MusicalInstrument(
+    id INTEGER PRIMARY KEY,
+    Type TEXT,
+    Model TEXT,
+    Conditions TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Children_Items_Toys(
+    id INTEGER PRIMARY KEY,
+    Type TEXT,
+    Conditions TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Pets(
+    id INTEGER PRIMARY KEY,
+    Type TEXT,
+    Conditions TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Commerce_office(
+    id INTEGER PRIMARY KEY,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Fashion_Beauty(
+    id INTEGER PRIMARY KEY,
+    Type TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+CREATE TABLE Games(
+    id INTEGER PRIMARY KEY,
+    Type TEXT,
+    Conditions TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+
 all user announces :
 SELECT 
     announces.*,
     PreOwnedCars.*,
     RealState.*
+    
 FROM announces
 LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id
 LEFT JOIN RealState ON RealState.announce_id = announces.id

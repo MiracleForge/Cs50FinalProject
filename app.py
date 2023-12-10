@@ -219,11 +219,20 @@ def adCreationDB():
             'sixthForm', 'rentOrSellchecklist', 'checkList'
         )
 
-        convert_type = None
-        if hidden_type == 'houses_Ad':
-            convert_type = 'RealState'
-        elif hidden_type == 'ownedCars_Ad':
-            convert_type = 'PreOwnedCars'
+        type_mapping = {
+            'houses_Ad': 'RealState',
+            'ownedCars_Ad': 'PreOwnedCars',
+            'furniture_Ad': 'HomeEssentials',
+            'tech_Ad': 'TechEssentials',
+            'musical_Ad': 'MusicalInstrument',
+            'toys_Ad': 'Children_Items_Toys',
+            'pet_Ad': 'Pets',
+            'office_Ad': 'Commerce_office',
+            'fashion_Ad': 'Fashion_Beauty',
+            'games_Ad': 'Games'
+        }
+
+        convert_type = type_mapping.get(hidden_type, None)
 
         if convert_type:
             # Inserir anúncio na tabela announces
@@ -232,34 +241,88 @@ def adCreationDB():
                 form_fields['title'], form_fields['description'], convert_type, user_onSection
             )
 
-            # Obter o ID do último anúncio inserido
             result = db.execute('SELECT id FROM announces ORDER BY id DESC LIMIT 1')
             announce_id = result[0]['id'] if result else None
 
             if announce_id is not None:
-                # Inserir detalhes específicos para anúncios do tipo RealState ou PreOwnedCars
+                
                 principal_checklist_values = request.form.getlist('principalCheckList')
                 principal_checklist_json = json.dumps(principal_checklist_values)
                 print("Principal Checklist Values:", principal_checklist_values)
 
-                if convert_type == 'RealState':
-                    db.execute(
-                        'INSERT INTO RealState (PropertyType, RentSale, NumberOfRooms, NumberOfBathrooms, AreaM2, GarageSpace, DependenciesID, Price, ImagesID, Address, Contact, announce_id) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
-                        form_fields['thirdDataList'], form_fields['tirthForm'], form_fields['forthDataList'],
-                        principal_checklist_json, form_fields['forthForm'],
-                        None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
-                    )
+                match convert_type:
+                    case 'RealState':
+                        db.execute(
+                            'INSERT INTO RealState (PropertyType, RentSale, NumberOfRooms, NumberOfBathrooms, AreaM2, GarageSpace, DependenciesID, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
+                            form_fields['thirdDataList'], form_fields['tirthForm'], form_fields['forthDataList'],
+                            principal_checklist_json, form_fields['forthForm'],
+                            None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
 
-                elif convert_type == 'PreOwnedCars':
-                    db.execute(
-                        'INSERT INTO PreOwnedCars(CarModel, RentSale, Transmission, Engine, Mileage, Doors, CarAtributtes, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                        form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
-                        form_fields['thirdDataList'], form_fields['tirthForm'], form_fields['forthDataList'],
-                        principal_checklist_json, form_fields['forthForm'],
-                        None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
-                    )
+                    case 'PreOwnedCars':
+                        db.execute(
+                            'INSERT INTO PreOwnedCars(CarModel, RentSale, Transmission, Engine, Mileage, Doors, CarAtributtes, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
+                            form_fields['thirdDataList'], form_fields['tirthForm'], form_fields['forthDataList'],
+                            principal_checklist_json, form_fields['forthForm'],
+                            None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
 
+                    case 'HomeEssentials':
+                        db.execute(
+                            'INSERT INTO HomeEssentials(Categorys, Conditions, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['secondDataList'],
+                            form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                    case 'TechEssentials':
+                        db.execute(
+                            'INSERT INTO TechEssentials(Type, Model, Conditions, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['secondDataList'], form_fields['thirdDataList'],
+                            form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                    case 'MusicalInstrument':
+                        db.execute(
+                            'INSERT INTO MusicalInstrument(Type, Model, Conditions, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['secondDataList'], form_fields['thirdDataList'],
+                            form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                    case 'Children_Items_Toys':
+                        db.execute(
+                            'INSERT INTO Children_Items_Toys(Type, Conditions, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['secondDataList'], form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                    case 'Pets':
+                        db.execute(
+                            'INSERT INTO Pets(Type, Conditions, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['secondDataList'], form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                    case 'Commerce_office':
+                        db.execute(
+                            'INSERT INTO Commerce_office( Price, ImagesID, Address, Contact, announce_id) VALUES ( ?, ?, ?, ?, ?)',
+                            form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                    case 'Fashion_Beauty':
+                        db.execute(
+                            'INSERT INTO Fashion_Beauty(Type, Price, ImagesID, Address, Contact, announce_id) VALUES ( ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                    case 'Games':
+                        db.execute(
+                            'INSERT INTO Games(Type, Conditions, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                            form_fields['firstDataList'], form_fields['secondDataList'], form_fields['forthForm'], None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                        )
+
+                flash("Announce Create Sucessifuly")
+                return redirect('/')
+                    
     return render_template("AdsCreate.html", error=error_message)
 
 
