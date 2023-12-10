@@ -334,7 +334,7 @@
                                             {% set checkboxes = ads_category_map[ads_type]['checkbox'] %}
                                             {% for option in checkboxes %}
                                                 <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="{{ option|lower }}" name="principalCheckList[]" value="{{ option|lower }}">
+                                                    <input type="checkbox" class="form-check-input" id="{{ option|lower }}" name="principalCheckList" value="{{ option|lower }}">
                                                     <label class="form-check-label text-white" for="{{ option|lower }}">
                                                         {{ option }}
                                                     </label>

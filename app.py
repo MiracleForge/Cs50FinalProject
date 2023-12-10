@@ -4,6 +4,8 @@ from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, g
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
+import json
+
 
 import re
 
@@ -214,7 +216,7 @@ def adCreationDB():
         form_fields = get_non_empty_fields(request,
             'title', 'description', 'firstDataList', 'secondDataList',
             'thirdDataList', 'tirthForm', 'forthForm', 'fifthForm',
-            'sixthForm', 'rentOrSellchecklist', 'checkList', 'principalCheckList'
+            'sixthForm', 'rentOrSellchecklist', 'checkList'
         )
 
         if hidden_type == 'houses_Ad':
@@ -228,10 +230,15 @@ def adCreationDB():
         announce_id = result[0]['id'] if result else None
 
         if announce_id is not None and hidden_type == 'houses_Ad':
-        # Inserir detalhes específicos para anúncios do tipo RealState na tabela RealState
+            # Inserir detalhes específicos para anúncios do tipo RealState na tabela RealState
+            principal_checklist_values = request.form.getlist('principalCheckList')
+            # Converta a lista em uma string JSON antes de inserir no banco de dados
+            principal_checklist_json = json.dumps(principal_checklist_values)
+            print("Principal Checklist Values:", principal_checklist_values)
+
             db.execute('INSERT INTO RealState (PropertyType, RentSale, NumberOfBathrooms, AreaM2, GarageSpace, DependenciesID, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
-                        form_fields['tirthForm'], form_fields['secondDataList'], None, form_fields['forthForm'],
+                        form_fields['tirthForm'], form_fields['secondDataList'], principal_checklist_json, form_fields['forthForm'],
                         None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id)
 
     return render_template("AdsCreate.html", error=error_message)
