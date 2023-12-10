@@ -208,41 +208,59 @@ def announce():
 @login_required
 def adCreationDB():
     hidden_type = request.form.get('ads_type')
-    user_onSection = session['user_id']
+    user_onSection = session.get('user_id')
     error_message = None
 
     if validate_ad_type(hidden_type) and user_onSection:
-
-        form_fields = get_non_empty_fields(request,
+        form_fields = get_non_empty_fields(
+            request,
             'title', 'description', 'firstDataList', 'secondDataList',
-            'thirdDataList', 'tirthForm', 'forthForm', 'fifthForm',
+            'thirdDataList', 'forthDataList', 'tirthForm', 'forthForm', 'fifthForm',
             'sixthForm', 'rentOrSellchecklist', 'checkList'
         )
 
+        convert_type = None
         if hidden_type == 'houses_Ad':
             convert_type = 'RealState'
-        # Inserir anúncio na tabela announces
-        db.execute('INSERT INTO announces (title, description, announcement_type, user_id) VALUES (?, ?, ?, ?)',
-                    form_fields['title'], form_fields['description'], convert_type, user_onSection)
+        elif hidden_type == 'ownedCars_Ad':
+            convert_type = 'PreOwnedCars'
 
-        # Obter o ID do último anúncio inserido
-        result = db.execute('SELECT id FROM announces ORDER BY id DESC LIMIT 1')
-        announce_id = result[0]['id'] if result else None
+        if convert_type:
+            # Inserir anúncio na tabela announces
+            db.execute(
+                'INSERT INTO announces (title, description, announcement_type, user_id) VALUES (?, ?, ?, ?)',
+                form_fields['title'], form_fields['description'], convert_type, user_onSection
+            )
 
-        if announce_id is not None and hidden_type == 'houses_Ad':
-            # Inserir detalhes específicos para anúncios do tipo RealState na tabela RealState
-            principal_checklist_values = request.form.getlist('principalCheckList')
-            # Converta a lista em uma string JSON antes de inserir no banco de dados
-            principal_checklist_json = json.dumps(principal_checklist_values)
-            print("Principal Checklist Values:", principal_checklist_values)
+            # Obter o ID do último anúncio inserido
+            result = db.execute('SELECT id FROM announces ORDER BY id DESC LIMIT 1')
+            announce_id = result[0]['id'] if result else None
 
-            db.execute('INSERT INTO RealState (PropertyType, RentSale, NumberOfBathrooms, AreaM2, GarageSpace, DependenciesID, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            if announce_id is not None:
+                # Inserir detalhes específicos para anúncios do tipo RealState ou PreOwnedCars
+                principal_checklist_values = request.form.getlist('principalCheckList')
+                principal_checklist_json = json.dumps(principal_checklist_values)
+                print("Principal Checklist Values:", principal_checklist_values)
+
+                if convert_type == 'RealState':
+                    db.execute(
+                        'INSERT INTO RealState (PropertyType, RentSale, NumberOfRooms, NumberOfBathrooms, AreaM2, GarageSpace, DependenciesID, Price, ImagesID, Address, Contact, announce_id) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
-                        form_fields['tirthForm'], form_fields['secondDataList'], principal_checklist_json, form_fields['forthForm'],
-                        None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id)
+                        form_fields['thirdDataList'], form_fields['tirthForm'], form_fields['forthDataList'],
+                        principal_checklist_json, form_fields['forthForm'],
+                        None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                    )
+
+                elif convert_type == 'PreOwnedCars':
+                    db.execute(
+                        'INSERT INTO PreOwnedCars(CarModel, RentSale, Transmission, Engine, Mileage, Doors, CarAtributtes, Price, ImagesID, Address, Contact, announce_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                        form_fields['firstDataList'], form_fields['rentOrSellchecklist'], form_fields['secondDataList'],
+                        form_fields['thirdDataList'], form_fields['tirthForm'], form_fields['forthDataList'],
+                        principal_checklist_json, form_fields['forthForm'],
+                        None, form_fields['fifthForm'], form_fields['sixthForm'], announce_id
+                    )
 
     return render_template("AdsCreate.html", error=error_message)
-
 
 
                

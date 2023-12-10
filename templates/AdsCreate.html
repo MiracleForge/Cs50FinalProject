@@ -311,11 +311,11 @@
 
                             {% endif %}
                             <!---->
-                            <!-- bathroom -->
+
                             {% if ads_type in ['houses_Ad', 'ownedCars_Ad'] %}
                                 {% set forthDropdown = ads_category_map[ads_type]['dropdowns'][3] %}
-                                    <label for="exampleDataList" class="form-label text-white pt-4">{{ forthDropdown['label']}}</label>
-                                    <input class="form-control border border-dark shadow" list="forthDataList" id="exampleDataList" placeholder="Type to search...">
+                                    <label for="forthDataList" class="form-label text-white pt-4">{{ forthDropdown['label']}}</label>
+                                    <input class="form-control border border-dark shadow" name="forthDataList" list="forthDataList" id="exampleDataList" placeholder="Type to search...">
                                     <datalist id="forthDataList">
                                         {% for option in forthDropdown['options'] %}
                                             <option value="{{ option }}">

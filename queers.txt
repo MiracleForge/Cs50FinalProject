@@ -1,0 +1,52 @@
+CREATE TABLE PreOwnedCars(
+    id INTEGER PRIMARY KEY,
+    CarModel TEXT,
+    RentSale TEXT,
+    Transmission TEXT,
+    Engine TEXT,
+    Mileage REAL,
+    Doors TEXT,
+    CarAtributtes TEXT,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE RealState (
+    id INTEGER PRIMARY KEY,
+    PropertyType TEXT,
+    RentSale TEXT,
+    NumberOfRooms TEXT,
+    NumberOfBathrooms TEXT,
+    AreaM2 REAL,
+    GarageSpace INTEGER,
+    DependenciesID INTEGER,
+    Price INTEGER,
+    ImagesID INTEGER,
+    Address TEXT,
+    Contact TEXT,
+    announce_id INTEGER,
+    FOREIGN KEY (announce_id) REFERENCES announces(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+
+
+
+
+all user announces :
+SELECT 
+    announces.*,
+    PreOwnedCars.*,
+    RealState.*
+FROM announces
+LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id
+LEFT JOIN RealState ON RealState.announce_id = announces.id
+WHERE announces.user_id = 1;

@@ -62,6 +62,8 @@ def validate_ad_type(ad_type):
 
 
 
+
+
     
 
 
