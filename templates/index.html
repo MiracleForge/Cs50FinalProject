@@ -26,4 +26,13 @@
             </div>
         </div>
     {% endif %}
+
+    <p>Debug: {{ imagesDB }}</p>
+    {% for image_data in imagesDB %}
+        <img src="data:image/png;base64,{{ image_data['image_data'] }}" alt="">
+    {% endfor %}
+    
+    
+    
+    
 {% endblock %}

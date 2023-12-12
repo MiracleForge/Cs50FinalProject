@@ -6,6 +6,9 @@ from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
 
+from PIL import Image  
+from io import BytesIO
+import base64 #converting back to base64
 
 import re
 
@@ -50,10 +53,31 @@ def before_request():
 def index():
     if "user_id" in session:
         user_id = session["user_id"]
-        
+
         result = db.execute("SELECT username FROM autenticacao WHERE id = ?", (user_id,))
         display_username = result[0]["username"] if result else None
-        return render_template("index.html", display_username=display_username)
+
+        # Carregue os dados do banco de dados
+        images_data_db = db.execute("SELECT * FROM AnnounceImages;")
+
+        for image_data in images_data_db:
+            blob_data = image_data["image_data"]
+            image_path = 'temp_image.png'  # Nome do arquivo temporário
+            with open(image_path, 'wb') as f:
+                f.write(blob_data)
+                # Reabra o arquivo com o Pillow para garantir que é uma imagem válida
+                try:
+                    image = Image.open(image_path)
+                    buffered = BytesIO()
+                    image.save(buffered, format="PNG")
+                    image_data["image_data"] = base64.b64encode(buffered.getvalue()).decode("utf-8")
+                except Exception as e:
+                    print(f"Erro ao processar a imagem: {e}")
+
+            # Remove o arquivo temporário após o processamento
+            os.remove(image_path)
+
+        return render_template("index.html", display_username=display_username, imagesDB=images_data_db)
 
     return render_template("index.html")
 
@@ -244,6 +268,17 @@ def adCreationDB():
             result = db.execute('SELECT id FROM announces ORDER BY id DESC LIMIT 1')
             announce_id = result[0]['id'] if result else None
 
+            for file in request.files.getlist('files'):
+                print(f"Processing file: {file.filename}")
+                image_data = file.read()
+                print(f"Image data: {image_data[:50]}...")  # Printar os primeiros 50 bytes para debug
+                db.execute("INSERT INTO AnnounceImages(announce_id, image_data, user_id) VALUES (?, ?, ?)",
+                        announce_id, image_data, user_onSection)
+                print("Image inserted successfully.")
+
+
+
+            
             if announce_id is not None:
                 
                 principal_checklist_values = request.form.getlist('principalCheckList')

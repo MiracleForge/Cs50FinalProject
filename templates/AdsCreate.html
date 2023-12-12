@@ -229,7 +229,7 @@
             <div class="col-12 col-lg-6">
                 <div class="card-body mx-3">
                     <!-- Formulário 1 -->
-                    <form class="form py-3" role="form" autocomplete="off" method="POST" action="/adsCreate">
+                    <form class="form py-3" role="form" autocomplete="off" method="POST" action="/adsCreate" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="title" class="text-white ">Title * <small class="text-dark">Title of your announce</small></label>
                             <input type="text" class="form-control border border-dark shadow " id="title" name="title" required>
@@ -355,10 +355,7 @@
                         
                             <div class="mb-3 pt-4">
                                 <label for="formFileMultiple" class="form-label text-white ">Multiple files input example</label>
-                                <input class="form-control border border-dark shadow " type="file" id="formFileMultiple" name="files[]" multiple>
-                                <div class="pt-2">
-                                    <button class="btn btn-primary" type="submit">Upload</button>
-                                </div>
+                                <input class="form-control border border-dark shadow " type="file" id="formFileMultiple" name="files" multiple>
                             </div>
 
                         <!--Adress-->
