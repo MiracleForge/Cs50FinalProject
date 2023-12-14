@@ -163,4 +163,12 @@ SELECT
 FROM announces
 LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id
 LEFT JOIN RealState ON RealState.announce_id = announces.id
-WHERE announces.user_id = 1;
+WHERE announces.user_id = display_username;
+
+
+
+        user_ads = db.execute(
+            "SELECT announces.*, PreOwnedCars.*, RealState.* FROM announces "
+            "LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id "
+            "LEFT JOIN RealState ON RealState.announce_id = announces.id "
+            "WHERE announces.user_id = ?;", user_id)

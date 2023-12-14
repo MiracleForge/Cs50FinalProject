@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My ads
+{% endblock %}
+
+{% block main %}
+  <div class="container-xxl font-family-arial d-flex flex-column">
+    <h1 class="w-100 mb-4 text-center"><strong>My Announces!</strong></h1>
+    <hr class="w-100 my-4"> <!-- Linha horizontal abaixo do título -->
+    <div class="row">
+      {% for data in user_ads %}
+        <div class="col-12 col-lg-6">
+          <div class="card m-5 card-title">
+            <div class="card-body d-flex custon-cardbord rounded-left rounded-right rounded-top">
+              <div class="mr-3">
+                {% if data['image_data'] %}
+                  <img class="img-fluid rounded hover-zoom" style="height: 150px!important; width: 150px!important;" src="data:image/png;base64,{{ data['image_data'] }}" alt="Announce Image">
+                {% else %}
+                  <img class="img-fluid rounded hover-zoom" style="height: 150px!important; width: 150px!important;" src="../static/assets/image/place_holder.jpg" alt="Announce Image">
+                {% endif %}
+              </div>
+              <div class="p-3">
+                <h3 class="card-title text-white text-break">
+                  {{ data['title'][:20] }}{# Adjust the number '50' to your desired character limit #}
+                  {% if data['title']|length > 20 %}...{% endif %}
+                </h3>
+                <p class="card-text"><b>$ {{ data['price'] }},00</b></p>
+              </div>
+              
+            </div>
+            <div class="card-footer pb-3 pr-4 rounded-bottom rounded-right rounded-left bg-dark">
+                <form method="post" action="/myads">
+                  <input type="hidden" name="id_announce" value="{{ data['id'] }}">
+                  <button type="submit" class="btn btn-primary btn-light">Go to the Announce!</button>
+                </form>
+              </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

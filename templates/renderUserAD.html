@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Announce rendered
+{% endblock %}
+
+{% block main %}
+    <p>Debug: {{ data }}</p>
+    {% for image_data in data %}
+        <img src="data:image/png;base64,{{ image_data['image_data'] }}" alt="">
+    {% endfor %}
+{% endblock %}

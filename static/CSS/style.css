@@ -55,6 +55,17 @@ body {
     }
 }
 
+.hover-zoom {
+    transition: transform 0.3s ease-in-out; 
+    
+}
+  
+  .hover-zoom:hover {
+    transform: scale(1.08); 
+    margin-right: 15px!important;
+  }
+
+
 .nav-link {
     transition: margin-top 0.3s ease;
 }
@@ -64,6 +75,9 @@ body {
     color: #768390!important; 
 }
 
+.card-title:hover {
+    color: #007BFF !important;
+}
 /*Animations work with git */
 
 

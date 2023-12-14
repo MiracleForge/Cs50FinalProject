@@ -195,13 +195,87 @@ def logout():
 
 
 #NAV ROUTES
-@app.route("/myads", methods=["GET"])
-def myads():
-    if request.method == 'GET':
+@app.route("/myads", methods=['GET', 'POST'])
+@login_required
+def ShowingUserAds():
+    if request.method == "GET":
         if "user_id" in session:
-            return redirect("/")
-        else:
-            return render_template("login.html")
+            user_id = session["user_id"]
+            # Executar a consulta e obter os resultados
+            user_ads = db.execute(
+                "SELECT announces.id, announces.title, "
+                "CASE "
+                "   WHEN announces.announcement_type = 'PreOwnedCars' THEN PreOwnedCars.Price "
+                "   WHEN announces.announcement_type = 'RealState' THEN RealState.Price "
+                "   WHEN announces.announcement_type = 'HomeEssentials' THEN HomeEssentials.Price "
+                "   WHEN announces.announcement_type = 'TechEssentials' THEN TechEssentials.Price "
+                "   WHEN announces.announcement_type = 'MusicalInstrument' THEN MusicalInstrument.Price "
+                "   WHEN announces.announcement_type = 'Children_Items_Toys' THEN Children_Items_Toys.Price "
+                "   WHEN announces.announcement_type = 'Pets' THEN Pets.Price "
+                "   WHEN announces.announcement_type = 'Commerce_office' THEN Commerce_office.Price "
+                "   WHEN announces.announcement_type = 'Fashion_Beauty' THEN Fashion_Beauty.Price "
+                "   WHEN announces.announcement_type = 'Games' THEN Games.Price "
+                "END AS price, "
+                "AnnounceImages.image_data "
+                "FROM announces "
+                "LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id AND announces.announcement_type = 'PreOwnedCars' "
+                "LEFT JOIN RealState ON RealState.announce_id = announces.id AND announces.announcement_type = 'RealState' "
+                "LEFT JOIN HomeEssentials ON HomeEssentials.announce_id = announces.id AND announces.announcement_type = 'HomeEssentials' "
+                "LEFT JOIN TechEssentials ON TechEssentials.announce_id = announces.id AND announces.announcement_type = 'TechEssentials' "
+                "LEFT JOIN MusicalInstrument ON MusicalInstrument.announce_id = announces.id AND announces.announcement_type = 'MusicalInstrument' "
+                "LEFT JOIN Children_Items_Toys ON Children_Items_Toys.announce_id = announces.id AND announces.announcement_type = 'Children_Items_Toys' "
+                "LEFT JOIN Pets ON Pets.announce_id = announces.id AND announces.announcement_type = 'Pets' "
+                "LEFT JOIN Commerce_office ON Commerce_office.announce_id = announces.id AND announces.announcement_type = 'Commerce_office' "
+                "LEFT JOIN Fashion_Beauty ON Fashion_Beauty.announce_id = announces.id AND announces.announcement_type = 'Fashion_Beauty' "
+                "LEFT JOIN Games ON Games.announce_id = announces.id AND announces.announcement_type = 'Games' "
+                "LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id "
+                "WHERE announces.user_id = ?;",
+                user_id)
+
+
+            # Processa cada anúncio para converter e adicionar a imagem
+            for ad in user_ads:
+                if ad["image_data"]:
+                    blob_data = ad["image_data"]
+                    try:
+                        image = Image.open(BytesIO(blob_data))
+                        buffered = BytesIO()
+                        image.save(buffered, format="PNG")
+                        ad["image_data"] = base64.b64encode(buffered.getvalue()).decode("utf-8")
+                    except Exception as e:
+                        print(f"Erro ao processar a imagem: {e}")
+
+            return render_template("Myads.html", user_ads=user_ads)
+    else:
+        id_announce = request.form.get("id_announce")
+        print(f"id is: {id_announce}")
+
+        announce_data = db.execute("""
+            SELECT announces.*, AnnounceImages.*, 
+                CASE
+                    WHEN announces.announcement_type = 'PreOwnedCars' THEN 'PreOwnedCars'
+                    WHEN announces.announcement_type = 'RealState' THEN 'RealState'
+                    WHEN announces.announcement_type = 'HomeEssentials' THEN 'HomeEssentials'
+                    WHEN announces.announcement_type = 'TechEssentials' THEN 'TechEssentials'
+                    WHEN announces.announcement_type = 'MusicalInstrument' THEN 'MusicalInstrument'
+                    WHEN announces.announcement_type = 'Children_Items_Toys' THEN 'Children_Items_Toys'
+                    WHEN announces.announcement_type = 'Pets' THEN 'Pets'
+                    WHEN announces.announcement_type = 'Commerce_office' THEN 'Commerce_office'
+                    WHEN announces.announcement_type = 'Fashion_Beauty' THEN 'Fashion_Beauty'
+                    WHEN announces.announcement_type = 'Games' THEN 'Games'
+                    ELSE NULL
+                END AS table_name
+            FROM announces
+            LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id
+            WHERE announces.id = ?
+        """, id_announce)
+
+
+
+
+
+        return render_template("renderUserAD.html", data=announce_data)
+
         
         
 #trying to work with git
@@ -275,10 +349,6 @@ def adCreationDB():
                 db.execute("INSERT INTO AnnounceImages(announce_id, image_data, user_id) VALUES (?, ?, ?)",
                         announce_id, image_data, user_onSection)
                 print("Image inserted successfully.")
-
-
-
-            
             if announce_id is not None:
                 
                 principal_checklist_values = request.form.getlist('principalCheckList')
@@ -359,6 +429,10 @@ def adCreationDB():
                 return redirect('/')
                     
     return render_template("AdsCreate.html", error=error_message)
+
+
+
+
 
 
                
