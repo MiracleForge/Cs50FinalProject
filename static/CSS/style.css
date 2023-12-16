@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Oxanium&display=swap');
+
 main {
     padding: 0!important;
     left: 0!important;
@@ -25,7 +27,10 @@ body {
     color: black!important;
 }
 
-
+.propretyAtributes img {
+    height: 48px;
+    width: 48px;
+}
 
 /* Animation for the search icon on hover */
 .search-icon:hover svg {
@@ -100,6 +105,11 @@ body {
 
 
 /*------- REGISTER PAGE ENDS - */
+
+#categoryImage {
+    width: 8%;
+    min-width: 60px;
+}
 /* Styles for screens larger than 600 pixels */
 @media (min-width: 600px) {
 

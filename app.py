@@ -1,15 +1,15 @@
 import os
-
+#Basic for the app
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, g
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
-
+#for converting blob to png
 from PIL import Image  
 from io import BytesIO
 import base64 #converting back to base64
-
+# To password 
 import re
 
 from helpers import login_required, validate_ad_type, get_non_empty_fields
@@ -28,6 +28,7 @@ Session(app)
 
 db = SQL("sqlite:///app_db.db")
 
+
 # Config cache 
 @app.after_request
 def after_request(response):
@@ -37,6 +38,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+
 @app.before_request
 def before_request():
     g.display_username = None  
@@ -45,8 +47,6 @@ def before_request():
         user_id = session["user_id"]
         result = db.execute("SELECT username FROM autenticacao WHERE id = ?", (user_id,))
         g.display_username = result[0]["username"] if result else None
-
-
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -111,9 +111,6 @@ def login():
     
     return render_template("login.html", error=error_message)
 
-        
-
-from flask import render_template
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -179,7 +176,6 @@ def register():
 
     # Render the template com a mensagem de erro
     return render_template("register.html", error=error_message)
-
 
 
 @app.route("/logout")
@@ -248,33 +244,45 @@ def ShowingUserAds():
             return render_template("Myads.html", user_ads=user_ads)
     else:
         id_announce = request.form.get("id_announce")
-        print(f"id is: {id_announce}")
+        # get the username
+        announce_owner_query = "SELECT a.user_id, u.username FROM announces a JOIN autenticacao u ON a.user_id = u.id WHERE a.id = ?"
+        result_announce_owner = db.execute(announce_owner_query, id_announce)
 
-        announce_data = db.execute("""
-            SELECT announces.*, AnnounceImages.*, 
-                CASE
-                    WHEN announces.announcement_type = 'PreOwnedCars' THEN 'PreOwnedCars'
-                    WHEN announces.announcement_type = 'RealState' THEN 'RealState'
-                    WHEN announces.announcement_type = 'HomeEssentials' THEN 'HomeEssentials'
-                    WHEN announces.announcement_type = 'TechEssentials' THEN 'TechEssentials'
-                    WHEN announces.announcement_type = 'MusicalInstrument' THEN 'MusicalInstrument'
-                    WHEN announces.announcement_type = 'Children_Items_Toys' THEN 'Children_Items_Toys'
-                    WHEN announces.announcement_type = 'Pets' THEN 'Pets'
-                    WHEN announces.announcement_type = 'Commerce_office' THEN 'Commerce_office'
-                    WHEN announces.announcement_type = 'Fashion_Beauty' THEN 'Fashion_Beauty'
-                    WHEN announces.announcement_type = 'Games' THEN 'Games'
-                    ELSE NULL
-                END AS table_name
-            FROM announces
-            LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id
-            WHERE announces.id = ?
-        """, id_announce)
+        for row in result_announce_owner:
+            user_id = row.get("user_id")
+            username = row.get("username")
+        # get the announce 
+        announce_data = db.execute("SELECT * FROM announces WHERE id =?", id_announce
+            )
 
+        #get imagem from ad
+        imagem_ads = db.execute("SELECT image_data FROM AnnounceImages WHERE announce_id =?", id_announce)
+        
+        for ad in imagem_ads:
+            if ad["image_data"]:
+                blob_data = ad["image_data"]
+                try:
+                    image = Image.open(BytesIO(blob_data))
+                    buffered = BytesIO()
+                    image.save(buffered, format="PNG")
+                    ad["image_data"] = base64.b64encode(buffered.getvalue()).decode("utf-8")
+                except Exception as e:
+                    print("imagem_ads")
 
+        temp = announce_data[0]
+        announce_type = temp['announcement_type']
+        print(announce_type)
 
+        match announce_type:
+            case 'RealState':
+                info_data = db.execute("SELECT * FROM RealState WHERE announce_id =?", id_announce)
+                json_data_list = []
 
+                for json_data in info_data:
+                    json_data['DependenciesID'] = json.loads(json_data['DependenciesID'])
+                    json_data_list.append(json_data)          
 
-        return render_template("renderUserAD.html", data=announce_data)
+        return render_template("renderUserAD.html",owner_ad_data=username, announce_data=announce_data, image_data=imagem_ads, info_data=info_data, json_data_list=json_data_list)
 
         
         

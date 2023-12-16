@@ -5,8 +5,132 @@
 {% endblock %}
 
 {% block main %}
-    <p>Debug: {{ data }}</p>
-    {% for image_data in data %}
-        <img src="data:image/png;base64,{{ image_data['image_data'] }}" alt="">
-    {% endfor %}
+{% for data in announce_data %}
+    {% set logoHeader = data['announcement_type'] %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var adsType = '{{ logoHeader }}';
+
+            configureImage(adsType);  
+        });
+    </script>
+
+    <div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block bg-white " style="font-family: 'Montserrat', sans-serif;">
+        <div class="card-header bg-dark text-white h-25 text-center">
+            <a href="/announce" class="d-block mx-auto">
+                <img class="img-fluid navbar-brand" id="categoryImage" alt="Logo">
+            </a>
+            
+            <h4 class="mb-0 tw-bold p-2 "> 
+                 {{logoHeader}} announce !
+                <emoji>😊</emoji>
+            </h4>
+        </div>
+
+        <div class="card-body hide-on-small-screens custon-cardbody">
+            <div class="row">
+
+                <div class="col-12 col-lg-8">
+            
+                    <div class="card-body mx-3 rounded shadow-lg">
+                        
+                        <div class="shadow-sm bg-light p-3 mb-5 rounded">
+                            <h1 class="tw-bold, text-black">{{data['title']}}</h1>
+                            <div>
+                                {% for ad in image_data %}
+                                    <img class="" src="data:image/png;base64, {{ ad['image_data'] }}" style="height: auto; width: 100%;" alt="">
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% for type_data in info_data %}
+                        <div class="bg-white mt-3 rounded shadow-lg">
+                            <h3 class="text-center mt-3">Características Principais</h3>
+                            <ul class="list-unstyled pt-5 ms-sm-0 ms-md-5 d-flex flex-wrap justify-content-center justify-content-md-start">
+                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                    <img src="../static/assets/image/icons8-property-48.png" alt="Property Type" class="mr-2 img-fluid propretyAtributes">
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['PropertyType']}} Type</h4>
+                                </li>
+                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                    <img src="../static/assets/image/icons8-empty-bed-50.png" alt="Rooms" class="mr-2 img-fluid propretyAtributes">
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['NumberOfRooms']}} Rooms</h4>
+                                </li>
+                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                    <img src="../static/assets/image/icons8-bathroom-50.png" alt="Bathrooms" class="mr-2 img-fluid propretyAtributes">
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['NumberOfBathrooms']}} Bathrooms</h4>
+                                </li>
+                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                    <img src="../static/assets/image/icons8-garage-48.png" alt="Garage" class="mr-2 img-fluid propretyAtributes">
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['GarageSpace']}} Garage</h4>
+                                </li>
+                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                    {% if type_data['RentSale'] == "forSale" %}
+                                        <img class="mr-2 img-fluid propretyAtributes" src="../static/assets/image/icons8-for-sale-64.png" alt="For Sale">
+                                    {% else %}
+                                        <img class="mr-2 img-fluid propretyAtributes" src="../static/assets/image/icons8-for-rent-64.png" alt="For Rent">
+                                    {% endif %}
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{ type_data['RentSale'] }}</h4>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    </div>
+
+                </div>
+            
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 shadow-lg p-3 mb-5 rounded">
+                    
+                        <h4 class="text-center tw-light">{{ owner_ad_data }}</h4>
+                        <div class="d-flex align-items-center justify-content-center mt-3">
+                            <img class="img-fluid mr-2" src="../static/assets/image/icons8-phone-50.png" style="height: 28px; width: 28px;" alt="Contact">
+                            <h3 class="text-center tw-light mb-0">{{ type_data['Contact'] }}</h3>
+                        </div>
+                        <div class="text-center  text-black bg-light mt-4 rounded shadow-sm vr text-md text-sm" 
+                        >
+                            <h2 >Caracteristicas</h2>
+                            <hr>
+                            <h4 class="mt-3 text-secondary ">{{ data['description'] }} </h4>
+                            <hr>
+                            <h4 class="text-secondary ">{{type_data['Address']}}</h4>
+                            <hr>
+                            <h4 class="mt-3 text-secondary " >Area (sq ft):{{type_data['AreaM2']}}</h4>
+                            <hr>
+                        </div>
+                        
+                        <!--detal lists-->
+                        <div class="text-black bg-light mt-4 rounded shadow-sm vr text-md">
+                            <h4 class="text-center text-md">Details</h4>
+                            <ul style="list-style-type: none;" id="dependencyList">
+                                {% for json_data in json_data_list %}
+                                    {% for dependency in json_data['DependenciesID'] %}
+                                        <li class="pb-2 text-secondary">
+                                            <img class="detail_icons img-fluid" alt="Icons Details" style="height: 24px; width: 24px;">
+                                            {{ dependency }}
+                                        </li>
+                                    {% endfor %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                    {% endfor %}
+
+                </div>
+                       
+            
+        </div>
+    </div>
+{% endfor %}
+
 {% endblock %}
+

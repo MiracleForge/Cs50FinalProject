@@ -3,6 +3,10 @@ from flask import Flask, flash, redirect, render_template, request, session, g
 from flask_session import Session
 from functools import wraps
 
+from PIL import Image  
+from io import BytesIO
+import base64 #converting back to base64
+
 MAX_TITLE_LENGTH = 60
 MAX_DESCRYPTION_LENGTH = 200
 
@@ -49,6 +53,8 @@ def validate_ad_type(ad_type):
     if ad_type not in ad_types_allowed:
         return False, "Ad_type not allowed"
     return True
+
+
 
 
 
