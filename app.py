@@ -12,7 +12,7 @@ import base64 #converting back to base64
 # To password 
 import re
 
-from helpers import login_required, validate_ad_type, get_non_empty_fields
+from helpers import login_required, validate_ad_type, get_non_empty_fields, convert_blob_to_png
 
 MAX_TITLE_LENGTH = 60
 MAX_DESCRYPTION_LENGTH = 200
@@ -231,18 +231,12 @@ def ShowingUserAds():
 
             # Processa cada anúncio para converter e adicionar a imagem
             for ad in user_ads:
-                if ad["image_data"]:
-                    blob_data = ad["image_data"]
-                    try:
-                        image = Image.open(BytesIO(blob_data))
-                        buffered = BytesIO()
-                        image.save(buffered, format="PNG")
-                        ad["image_data"] = base64.b64encode(buffered.getvalue()).decode("utf-8")
-                    except Exception as e:
-                        print(f"Erro ao processar a imagem: {e}")
+                    if ad["image_data"]:
+                        ad["image_data"] = convert_blob_to_png(ad["image_data"])
 
             return render_template("Myads.html", user_ads=user_ads)
     else:
+
         id_announce = request.form.get("id_announce")
         # get the username
         announce_owner_query = "SELECT a.user_id, u.username FROM announces a JOIN autenticacao u ON a.user_id = u.id WHERE a.id = ?"
@@ -255,24 +249,15 @@ def ShowingUserAds():
         announce_data = db.execute("SELECT * FROM announces WHERE id =?", id_announce
             )
 
-        #get imagem from ad
         imagem_ads = db.execute("SELECT image_data FROM AnnounceImages WHERE announce_id =?", id_announce)
         
         for ad in imagem_ads:
-            if ad["image_data"]:
-                blob_data = ad["image_data"]
-                try:
-                    image = Image.open(BytesIO(blob_data))
-                    buffered = BytesIO()
-                    image.save(buffered, format="PNG")
-                    ad["image_data"] = base64.b64encode(buffered.getvalue()).decode("utf-8")
-                except Exception as e:
-                    print("imagem_ads")
+                if ad["image_data"]:
+                    ad["image_data"] = convert_blob_to_png(ad["image_data"])
 
         temp = announce_data[0]
         announce_type = temp['announcement_type']
-        print(announce_type)
-
+        json_data_list = None
         match announce_type:
             case 'RealState':
                 info_data = db.execute("SELECT * FROM RealState WHERE announce_id =?", id_announce)
@@ -280,8 +265,40 @@ def ShowingUserAds():
 
                 for json_data in info_data:
                     json_data['DependenciesID'] = json.loads(json_data['DependenciesID'])
-                    json_data_list.append(json_data)          
+                    json_data_list.append(json_data)
 
+            case 'PreOwnedCars':
+                info_data = db.execute("SELECT * FROM PreOwnedCars WHERE announce_id =?", id_announce)
+                json_data_list = []
+
+                for json_data in info_data:
+                    json_data['CarAtributtes'] = json.loads(json_data['CarAtributtes'])
+                    json_data_list.append(json_data)
+
+            case 'HomeEssentials':
+                info_data = db.execute("SELECT * FROM HomeEssentials WHERE announce_id =?", id_announce)
+            
+            case 'TechEssentials':
+                info_data = db.execute("SELECT * FROM TechEssentials WHERE announce_id =?", id_announce)
+            
+            case 'MusicalInstrument':
+                info_data = db.execute("SELECT * FROM MusicalInstrument WHERE announce_id =?", id_announce)
+            
+            case 'Pets':
+                info_data = db.execute("SELECT * FROM Pets WHERE announce_id =?", id_announce)
+            
+            case 'Children_Items_Toys':
+                info_data = db.execute("SELECT * FROM Children_Items_Toys WHERE announce_id =?", id_announce)
+            
+            case 'Commerce_office':
+                info_data = db.execute("SELECT * FROM Commerce_office WHERE announce_id =?", id_announce)
+            
+            case 'Fashion_Beauty':
+                info_data = db.execute("SELECT * FROM Fashion_Beauty WHERE announce_id =?", id_announce)
+            
+            case 'Games':
+                info_data = db.execute("SELECT * FROM Games WHERE announce_id =?", id_announce)
+            
         return render_template("renderUserAD.html",owner_ad_data=username, announce_data=announce_data, image_data=imagem_ads, info_data=info_data, json_data_list=json_data_list)
 
         

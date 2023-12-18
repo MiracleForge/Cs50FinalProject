@@ -7,12 +7,13 @@
 {% block main %}
 {% for data in announce_data %}
     {% set logoHeader = data['announcement_type'] %}
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var adsType = '{{ logoHeader }}';
 
             configureImage(adsType);  
-        });
+        });      
     </script>
 
     <div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block bg-white " style="font-family: 'Montserrat', sans-serif;">
@@ -29,60 +30,71 @@
 
         <div class="card-body hide-on-small-screens custon-cardbody">
             <div class="row">
-
                 <div class="col-12 col-lg-8">
-            
-                    <div class="card-body mx-3 rounded shadow-lg">
-                        
+                    <div class="card-body mx-3 rounded shadow-lg"> 
                         <div class="shadow-sm bg-light p-3 mb-5 rounded">
                             <h1 class="tw-bold, text-black">{{data['title']}}</h1>
                             <div>
                                 {% for ad in image_data %}
-                                    <img class="" src="data:image/png;base64, {{ ad['image_data'] }}" style="height: auto; width: 100%;" alt="">
+                                    <img class="img-fluid" src="data:image/png;base64, {{ ad['image_data'] }}" style="height: 500px; width: auto;" alt="">
                                 {% endfor %}
                             </div>
                         </div>
                         {% for type_data in info_data %}
+                        {% set conditions = type_data['Conditions'] %}
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var ad_conditions = '{{ type_data["Conditions"] }}';
+                                var ad_type = '{{ type_data["Type"] }}';
+                        
+                                configIconsConfig(ad_conditions, ad_type);
+                            });
+                        </script>
+                        {% set Features_mapping = {
+                            'RealState': {'First': 'PropertyType', 'Second': 'NumberOfRooms', 'Tirth': 'NumberOfBathrooms', 'Forth': 'GarageSpace'},
+                            'PreOwnedCars': {'First': 'CarModel', 'Second': 'Transmission', 'Tirth': 'Engine', 'Forth': 'Doors'}
+                        } %}
+                        
+                        {% set type_info = Features_mapping[data['announcement_type']] %}
+                        
+                        {% set display_labels = {
+                            'RealState': {'First': 'Type', 'Second': 'Rooms', 'Tirth': 'Bathrooms', 'Forth': 'Garage'},
+                            'PreOwnedCars': {'First': 'Model', 'Second': 'Transmission', 'Tirth': 'Engine', 'Forth': 'Doors'}
+                        } %}
+                        
                         <div class="bg-white mt-3 rounded shadow-lg">
-                            <h3 class="text-center mt-3">Características Principais</h3>
+                            <h3 class="text-center mt-3">Main features</h3>
                             <ul class="list-unstyled pt-5 ms-sm-0 ms-md-5 d-flex flex-wrap justify-content-center justify-content-md-start">
+                                {% if data['announcement_type'] in ['RealState', 'PreOwnedCars'] %}
+                                {% for attribute, label in [('First', 'Type'), ('Second', 'Rooms'), ('Tirth', 'Bathrooms'), ('Forth', 'Garage')] %}
+                                {% set attribute_value = type_data[type_info[attribute]] %}
+                                {% set display_label = display_labels[data['announcement_type']][attribute] %}
+                                {% set image_filename = 'icons-' ~ display_label|lower ~ '.png' %}
                                 <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
-                                    <img src="../static/assets/image/icons8-property-48.png" alt="Property Type" class="mr-2 img-fluid propretyAtributes">
-                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['PropertyType']}} Type</h4>
+                                    <img src="../static/assets/image/{{ image_filename }}" alt="{{ display_label }}" class="mr-2 img-fluid propretyAtributes">
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{ display_label }}: {{ attribute_value }}</h4>
                                 </li>
-                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
-                                    <img src="../static/assets/image/icons8-empty-bed-50.png" alt="Rooms" class="mr-2 img-fluid propretyAtributes">
-                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['NumberOfRooms']}} Rooms</h4>
-                                </li>
-                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
-                                    <img src="../static/assets/image/icons8-bathroom-50.png" alt="Bathrooms" class="mr-2 img-fluid propretyAtributes">
-                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['NumberOfBathrooms']}} Bathrooms</h4>
-                                </li>
-                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
-                                    <img src="../static/assets/image/icons8-garage-48.png" alt="Garage" class="mr-2 img-fluid propretyAtributes">
-                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{type_data['GarageSpace']}} Garage</h4>
-                                </li>
-                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
-                                    {% if type_data['RentSale'] == "forSale" %}
-                                        <img class="mr-2 img-fluid propretyAtributes" src="../static/assets/image/icons8-for-sale-64.png" alt="For Sale">
-                                    {% else %}
-                                        <img class="mr-2 img-fluid propretyAtributes" src="../static/assets/image/icons8-for-rent-64.png" alt="For Rent">
-                                    {% endif %}
-                                    <h4 class="text-secondary mb-0 ms-3 me-3">{{ type_data['RentSale'] }}</h4>
-                                </li>
-                            </ul>
-                            
-                        </div>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
+                            {% endfor %}
 
+                            <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                {% set sale_rent_icon = 'for-sale' if type_data['RentSale'] == 'forSale' else 'for-rent' %}
+                                <img class="mr-2 img-fluid propretyAtributes" src="../static/assets/image/icons8-{{ sale_rent_icon }}-64.png" alt="{{ 'For Sale' if type_data['RentSale'] == 'forSale' else 'For Rent' }}">
+                                <h4 class="text-secondary mb-0 ms-3 me-3">{{ type_data['RentSale'] }}</h4>
+                            </li>
+                            {% endif %}
+                            {% if data['announcement_type'] != 'RealState' and data['announcement_type'] != 'PreOwnedCars' %}
+                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                    <img class="img-fluid mr-2 img-fluid propretyAtributes iconsConditions"  alt="">
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">Condition: {{ type_data['Conditions'] }}</h4>
+                                </li>
+                                <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                    <img class="img-fluid mr-2 img-fluid propretyAtributes iconsType"  alt="">
+                                    <h4 class="text-secondary mb-0 ms-3 me-3">Type: {{ type_data['Type'] }}</h4>
+                                </li>
+                            {% endif %}
+                            </ul>  
+                        </div>
+                    </div>
                 </div>
             
                 <div class="col-12 col-sm-12 col-md-12 col-lg-4 shadow-lg p-3 mb-5 rounded">
@@ -94,40 +106,41 @@
                         </div>
                         <div class="text-center  text-black bg-light mt-4 rounded shadow-sm vr text-md text-sm" 
                         >
-                            <h2 >Caracteristicas</h2>
+                            <h2 >Description</h2>
+                            <hr>
+                            <h4 >${{ type_data['Price']}}</h4>
                             <hr>
                             <h4 class="mt-3 text-secondary ">{{ data['description'] }} </h4>
                             <hr>
                             <h4 class="text-secondary ">{{type_data['Address']}}</h4>
                             <hr>
-                            <h4 class="mt-3 text-secondary " >Area (sq ft):{{type_data['AreaM2']}}</h4>
-                            <hr>
+                            {% if data['announcement_type'] == 'RealState' %}
+                                <h4 class="mt-3 text-secondary">Area (sq ft): {{ type_data['AreaM2'] }}</h4>
+                                <hr>
+                            {% endif %}
                         </div>
                         
                         <!--detal lists-->
+                        {% if data['announcement_type'] in ['RealState', 'PreOwnedCars'] %}
                         <div class="text-black bg-light mt-4 rounded shadow-sm vr text-md">
-                            <h4 class="text-center text-md">Details</h4>
+                            <h4 class="text-center text-md">Atributtes</h4>
                             <ul style="list-style-type: none;" id="dependencyList">
                                 {% for json_data in json_data_list %}
-                                    {% for dependency in json_data['DependenciesID'] %}
-                                        <li class="pb-2 text-secondary">
-                                            <img class="detail_icons img-fluid" alt="Icons Details" style="height: 24px; width: 24px;">
-                                            {{ dependency }}
-                                        </li>
-                                    {% endfor %}
+                                    {% if 'DependenciesID' in json_data %}
+                                        {% for dependency in json_data['DependenciesID'] %}
+                                            <li class="pb-2 text-secondary">
+                                                <img class="detail_icons img-fluid" alt="Icons Details" style="height: 24px; width: 24px;">
+                                                {{ dependency }}
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
                                 {% endfor %}
                             </ul>
                         </div>
-                        
-                        
-                        
-                        
-                        
+                    {% endif %}                                                                                                                    
                     {% endfor %}
-
                 </div>
-                       
-            
+                                
         </div>
     </div>
 {% endfor %}

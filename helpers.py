@@ -55,6 +55,17 @@ def validate_ad_type(ad_type):
     return True
 
 
+def convert_blob_to_png(blob_data):
+    try:
+        image = Image.open(BytesIO(blob_data))
+        buffered = BytesIO()
+        image.save(buffered, format="PNG")
+        return base64.b64encode(buffered.getvalue()).decode("utf-8")
+    except Exception as e:
+        print(f"Error processing image: {e}")
+        return None
+
+
 
 
 
