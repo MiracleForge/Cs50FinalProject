@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block main %}
-  <div class="container-xxl font-family-arial d-flex flex-column">
-    <h1 class="w-100 mb-4 text-center"><strong>My Announces!</strong></h1>
+  <div class="container-xxl font-family-arial d-flex flex-column pt-5">
+    <h1 class="w-100 mb-4 text-center pt-5"><strong>My Announces!</strong></h1>
     <hr class="w-100 my-4"> <!-- Linha horizontal abaixo do título -->
     <div class="row">
       {% for data in user_ads %}
@@ -32,7 +32,7 @@
             <div class="card-footer pb-3 pr-4 rounded-bottom rounded-right rounded-left bg-dark">
                 <form method="post" action="/myads">
                   <input type="hidden" name="id_announce" value="{{ data['id'] }}">
-                  <button type="submit" class="btn btn-primary btn-light">Go to the Announce!</button>
+                  <button type="submit" class="btn btn-primary btn-light" id="MyadsBtn">Go to the Announce!</button>
                 </form>
               </div>
           </div>

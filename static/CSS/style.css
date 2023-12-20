@@ -27,10 +27,43 @@ body {
     color: black!important;
 }
 
+#MyadsBtn:hover {
+    cursor: pointer;
+    background-color: #808080!important;
+    color: black!important;
+}
 .propretyAtributes img {
     height: 48px;
     width: 48px;
 }
+
+.custon__homeType {
+
+    overflow: hidden;
+    transition: border-radius 0.3s ease-in-out, filter 0.3s ease;
+}
+
+.custon__homeType:hover {
+    cursor: pointer;
+    border-radius: 50%!important;
+}
+
+.custon__homeType:hover img {
+    filter: drop-shadow(0 0 20px red) invert(75%); /* Ajuste os valores de deslocamento (0 0) conforme necessário */
+}
+
+.custon__homeType img {
+    height: 64px!important;
+    width: 64px!important;
+    transition: border-radius 0.3s ease-in-out;
+}
+
+.custon__homeType img:hover {
+    border-radius: 50%!important;
+}
+
+
+
 
 /* Animation for the search icon on hover */
 .search-icon:hover svg {

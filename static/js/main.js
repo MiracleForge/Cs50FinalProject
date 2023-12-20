@@ -200,6 +200,48 @@ function configIconsConfig(ad_conditions, ad_type) {
                 case 'Specific Cat Products':
                     typeImagePath = '../static/assets/image/icons8-cat-50.png';
                     break;
+                case 'NootBook and Laptops':
+                    typeImagePath = '../static/assets/image/icons8-multiple-devices-32.png';
+                    break;
+                case 'Pcs and Desktops':
+                    typeImagePath = '../static/assets/image/icons8-computer-64.png';
+                    break;
+                case 'Cellphones':
+                    typeImagePath = '../static/assets/image/icons8-cellphones-64.png';
+                    break;
+                case 'Prints':
+                    typeImagePath = '../static/assets/image/icons8-printer-24.png';
+                    break;
+                case 'TVs':
+                    typeImagePath = '../static/assets/image/icons8-printer-24.png';
+                    break;
+                case 'Cameras':
+                    typeImagePath = '../static/assets/image/icons8-cameras-50.png';
+                    break;
+                case 'Dvd Players':
+                    typeImagePath = '../static/assets/image/icons8-dvd-logo-50.png';
+                    break;
+                case 'Furniture':
+                    typeImagePath = '../static/assets/image/icons8-furniture-50.png';
+                    break;
+                case 'Home Appliances':
+                    typeImagePath = '../static/assets/image/icons8-home-appliances-58.png';
+                    break;
+                case 'Building Materials and Garden':
+                    typeImagePath = '../static/assets/image/icons8-construction-materials-64.png';
+                    break;
+                case 'Household Utilities':
+                    typeImagePath = '../static/assets/image/icons8-utilities-50.png';
+                    break;
+                case 'Decorative Objects':
+                    typeImagePath = '../static/assets/image/icons8-humidifier-80.png';
+                    break;
+                case 'Small Appliances':
+                    typeImagePath = '../static/assets/image/icons8-home-appliances-58.png';
+                    break;
+                case 'Eletrodomestics':
+                    typeImagePath = '../static/assets/image/icons8-tumble-dryer-100(1).png';
+                    break;
             
             }
     

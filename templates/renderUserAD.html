@@ -16,7 +16,7 @@
         });      
     </script>
 
-    <div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block bg-white " style="font-family: 'Montserrat', sans-serif;">
+    <div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block bg-white pt-4 " style="font-family: 'Montserrat', sans-serif;">
         <div class="card-header bg-dark text-white h-25 text-center">
             <a href="/announce" class="d-block mx-auto">
                 <img class="img-fluid navbar-brand" id="categoryImage" alt="Logo">
@@ -91,6 +91,11 @@
                                     <img class="img-fluid mr-2 img-fluid propretyAtributes iconsType"  alt="">
                                     <h4 class="text-secondary mb-0 ms-3 me-3">Type: {{ type_data['Type'] }}</h4>
                                 </li>
+                            {% endif %}
+                            {% if data['announcement_type'] == 'TechEssentials' %}
+                            <li class="mb-2 pb-3 text-center text-md-start d-flex align-items-center col-12 col-md-6">
+                                <h4 class="text-secondary mb-0 ms-3 me-3">Model: {{ type_data['Model'] }}</h4>
+                            </li>
                             {% endif %}
                             </ul>  
                         </div>
