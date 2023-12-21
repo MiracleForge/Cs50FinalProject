@@ -15,9 +15,9 @@
             <div class="card-body d-flex custon-cardbord rounded-left rounded-right rounded-top">
               <div class="mr-3">
                 {% if data['image_data'] %}
-                  <img class="img-fluid rounded hover-zoom" style="height: 150px!important; width: 150px!important;" src="data:image/png;base64,{{ data['image_data'] }}" alt="Announce Image">
+                  <img class="img-fluid rounded hover-zoom announce_image"  src="data:image/png;base64,{{ data['image_data'] }}" alt="Announce Image">
                 {% else %}
-                  <img class="img-fluid rounded hover-zoom" style="height: 150px!important; width: 150px!important;" src="../static/assets/image/place_holder.jpg" alt="Announce Image">
+                  <img class="img-fluid rounded hover-zoom announce_image"  src="../static/assets/image/place_holder.jpg" alt="Announce Image">
                 {% endif %}
               </div>
               <div class="p-3">

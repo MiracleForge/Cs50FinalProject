@@ -51,35 +51,24 @@ def before_request():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if "user_id" in session:
-        user_id = session["user_id"]
+    if request.method == "GET":
+        dataReal = db.execute(
+            "SELECT announces.id, announces.title, RealState.Price AS price, AnnounceImages.image_data, RealState.Address AS address "
+            "FROM announces "
+            "LEFT JOIN RealState ON RealState.announce_id = announces.id AND announces.announcement_type = 'RealState' "
+            "LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id "
+            "WHERE announces.announcement_type = 'RealState';"
+        )
 
-        result = db.execute("SELECT username FROM autenticacao WHERE id = ?", (user_id,))
-        display_username = result[0]["username"] if result else None
+     
+        for ad in dataReal:
+                if ad["image_data"]:
+                    ad["image_data"] = convert_blob_to_png(ad["image_data"])
 
-        # Carregue os dados do banco de dados
-        images_data_db = db.execute("SELECT * FROM AnnounceImages;")
+        return render_template("index.html", dataReal=dataReal)
 
-        for image_data in images_data_db:
-            blob_data = image_data["image_data"]
-            image_path = 'temp_image.png'  # Nome do arquivo temporário
-            with open(image_path, 'wb') as f:
-                f.write(blob_data)
-                # Reabra o arquivo com o Pillow para garantir que é uma imagem válida
-                try:
-                    image = Image.open(image_path)
-                    buffered = BytesIO()
-                    image.save(buffered, format="PNG")
-                    image_data["image_data"] = base64.b64encode(buffered.getvalue()).decode("utf-8")
-                except Exception as e:
-                    print(f"Erro ao processar a imagem: {e}")
 
-            # Remove o arquivo temporário após o processamento
-            os.remove(image_path)
-
-        return render_template("index.html", display_username=display_username, imagesDB=images_data_db)
-
-    return render_template("index.html")
+        
 
 
 #Login routes
