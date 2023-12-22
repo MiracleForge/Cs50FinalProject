@@ -71,20 +71,28 @@ body {
 .img-wrapper {
     display: inline-block;
     overflow: hidden;
+    cursor: pointer;
+}
+.img-wrapper__Mobile {
+ 
+    overflow: hidden;
+    cursor: pointer;
 }
 
-.img-wrapper img {
+.img-wrapper img, .img-wrapper__Mobile img {
     transition: transform 0.3s ease;
     transform-origin: center top; 
 }
 
-.img-wrapper:hover img {
+.img-wrapper:hover img, .img-wrapper__Mobile:hover img {
     transform: scale(1.5);
     -ms-transform: scale(1.5);
     -moz-transform: scale(1.5);
     -webkit-transform: scale(1.5);
     -o-transform: scale(1.5);
 }
+
+
 /*INDEX PAGE */
 
 /* Animation for the search icon on hover */

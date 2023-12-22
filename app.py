@@ -57,18 +57,29 @@ def index():
             "FROM announces "
             "LEFT JOIN RealState ON RealState.announce_id = announces.id AND announces.announcement_type = 'RealState' "
             "LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id "
-            "WHERE announces.announcement_type = 'RealState';"
+            "WHERE announces.announcement_type = 'RealState' "
+            "LIMIT 16;"
         )
 
-     
+        dataCars = db.execute(
+            "SELECT announces.id, announces.title, PreOwnedCars.Price AS price, AnnounceImages.image_data, PreOwnedCars.Address AS address "
+            "FROM announces "
+            "LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id AND announces.announcement_type = 'PreOwnedCars' "
+            "LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id "
+            "WHERE announces.announcement_type = 'PreOwnedCars' "
+            "LIMIT 16;"
+        )
+
+
+        for ad in dataCars:
+                if ad["image_data"]:
+                    ad["image_data"] = convert_blob_to_png(ad["image_data"])
+
         for ad in dataReal:
                 if ad["image_data"]:
                     ad["image_data"] = convert_blob_to_png(ad["image_data"])
 
-        return render_template("index.html", dataReal=dataReal)
-
-
-        
+        return render_template("index.html", dataReal=dataReal, dataCars=dataCars)
 
 
 #Login routes

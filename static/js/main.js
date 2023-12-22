@@ -112,6 +112,30 @@ function configureIcons(content_detal, element) {
         case "grill / barbecue":
             imagePath = '../static/assets/image/icons8-grill-60.png';
             break;
+        case "car tax pay":
+            imagePath = '../static/assets/image/icons8-taxes-50.png';
+            break;
+        case "with fines":
+            imagePath = '../static/assets/image/icons8-euro-64.png';
+            break;
+        case "single owner":
+            imagePath = '../static/assets/image/icons8-landlord-50.png';
+            break;
+        case "with manual":
+            imagePath = '../static/assets/image/icons8-refer-to-manual-100.png';
+            break;
+        case "from auction":
+            imagePath = '../static/assets/image/icons8-auction-24.png';
+            break;
+        case "spare keys":
+            imagePath = '../static/assets/image/icons8-keys-holder-50.png';
+            break;
+        case "maintenance and warranty":
+            imagePath = '../static/assets/image/icons8-warranty-50.png';
+            break;
+        case "inspections done":
+            imagePath = '../static/assets/image/icons8-inspection-50.png';
+            break;
 
         default:
             imagePath = '../static/assets/favicon/favicon.png';

@@ -176,79 +176,148 @@
                   </div>
               </form>
               
-                <!-- RealState Announces -->
-                <div class="bg-white rounded pt-3 m-4">
-                  <small class="m-1 ps-4">Properties</small>
-                  <h3 class="m-1 ps-4">Real State</h3>
-                  <div id="carousel_preownedcar" class="carousel carousel-dark slide" data-bs-ride="carousel" >
-                      <div class="carousel-inner">
-                          {% for i in range(6) %}
-                              <div class="carousel-item {% if i == 0 %}active{% endif %}">
-                                  <div class="card-group">
-                                      {% for j in range(4) %} 
-                                          <div class="card rounded img-wrapper {% if j == 0 %}me-1 me-lg-1 ms-1 ms-lg-2{% else %}me-1 me-lg-1 ms-3 ms-lg-1{% endif %}
-                                              align-items-center mb-3 border border-1 shadow-sm {% if j > 0 %}d-none d-sm-block{% endif %}">
-                                              <img src="/static/assets/image/offroader-jeep-driving-highway.jpg"
-                                                  class="card-img-top img-fluid rounded announce_image" alt="...">
-                                              <div class="card-body align-items-center" {% if i == 0 %}style="max-width: 15rem;"{% else %}style="max-width: 10rem;"{% endif %}>
-                                                  <p>500.000</p>
-                                                  <p>Esse titulo é muito grande para usar</p>
-                                              </div>
-                                              <div class="card-footer align-items-center">
-                                                  <p>Esse adress é compativel?</p>
-                                              </div>
-                                          </div>
-                                      {% endfor %}
-                                  </div>
-                              </div>
-                          {% endfor %}
-                      </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carousel_preownedcar" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carousel_preownedcar" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                      </button>
+                <!-- Car Announces -->
+                <div class="bg-white rounded pt-3 m-4 d-none d-lg-block">
+                    <small class="m-1 ps-4">Auto</small>
+                    <h3 class="m-1 ps-4">Find your next home travel partner </h3>
+                    <div id="carousel_preownedcars" class="carousel slide " data-bs-ride="carousel">
+                        
+                      <div class="carousel-inner ">
+                            {% set chunk_size = 4 %}
+                            {% set num_announces = dataCars|length %}
+                            {% for i in range(0, num_announces, chunk_size) %}
+                                {% set start = i %}
+                                {% set end = i + chunk_size %}
+                                <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                                    <div class="card-group d-flex justify-content-center">
+                                        {% for j in range(start, end) %}
+                                            {% if j < num_announces %}
+                                                <label for="form_{{ j }}" class="card  label-clickable  rounded img-wrapper {% if j == start %}ms-1 ms-lg-2{% else %}ms-3 ms-lg-1{% endif %}
+                                                    align-items-center mb-3 border border-1 shadow-sm {% if j > start %}d-none d-sm-block{% endif %}">
+                                                    {% if dataCars[j]['image_data'] %}
+                                                        <img src="data:image/png;base64,{{ dataCars[j]['image_data'] }}" class="card-img-top img-fluid rounded announce_image" alt="{{ dataCars[j]['title'] }}">
+                                                    {% else %}
+                                                        <img class="card-img-top img-fluid rounded announce_image" src="../static/assets/image/place_holder.jpg" alt="{{ dataCars[j]['title'] }}">
+                                                    {% endif %}
+                                                    <form id="form_{{ j }}" method="post" action="/myads">
+                                                        <input type="hidden" name="id_announce" value="{{ dataCars[j]['id'] }}">
+                                                    </form>
+                                                    <div class="card-body">
+                                                        <p>${{ dataCars[j]['price'] }},00</p>
+                                                        <p>{{ dataCars[j]['title'] }}</p>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <p>
+                                                          <img class="img-fluid" src="/static/assets/image/icons8-location-64.png" alt="" style="height: 16px; width: 16px;">
+                                                          {{ dataCars[j]['address'] }}
+                                                        </p>                     
+                                                    </div>
+                                                </label>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                                                
+                        <button class="carousel-control-prev " type="button" data-bs-target="#carousel_preownedcars" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon rounded-circle" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next " type="button" data-bs-target="#carousel_preownedcars" data-bs-slide="next">
+                            <span class="carousel-control-next-icon rounded-circle " aria-hidden="true"></span>
+                            <span class="visually-hidden text-dark">Next</span>
+                        </button>
+                    </div>
                   </div>
+                <!--Car Mobile-->
+                <div class="bg-white rounded pt-3 m-4 d-md-none">
+                    <small class="m-1 ps-4">Auto</small>
+                    <h3 class="m-1 ps-4">Find your next home travel partner</h3>
+                    <div id="carosel_carMobile" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for index in range(dataCars|length) %}
+                                <button type="button" data-bs-target="#carosel_carMobile" data-bs-slide-to="{{ index }}" {% if index == 0 %}class="active"{% endif %} aria-label="Slide {{ index + 1 }}"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            {% for CarsMobile in dataCars %}
+                                <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                    <label class="card label-clickable rounded img-wrapper__Mobile">
+                                        <div class="card justify-content-center">
+                                            {% if CarsMobile['image_data'] %}
+                                                <img src="data:image/png;base64,{{ CarsMobile['image_data'] }}" class="card-img-top img-fluid rounded announce_image" alt="{{ CarsMobile['title'] }}">
+                                            {% else %}
+                                                <img class="card-img-top img-fluid rounded announce_image" src="../static/assets/image/place_holder.jpg" alt="{{ CarsMobile['title'] }}">
+                                            {% endif %}
+                                            <form id="form_carmobile_{{ loop.index }}" method="post" action="/myads">
+                                                <input type="hidden" name="id_announce" value="{{ CarsMobile['id'] }}">
+                                                <button type="submit" class="btn-stretched-link"></button>
+                                            </form>
+                                            <div class="card-body">
+                                                <h5>${{ CarsMobile['price'] }},00</h5>
+                                                <p>{{ CarsMobile['title'] }}</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <p>
+                                                    <img class="img-fluid" src="/static/assets/image/icons8-location-64.png" alt="" style="height: 16px; width: 16px;">
+                                                    {{ CarsMobile['address'] }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carosel_carMobile" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carosel_carMobile" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
-                <!--RealState-->
+                <!--Car mobile -->
                 <!-- RealState Announces -->
-                <div class="bg-white rounded pt-3 m-4">
-                  <small class="m-1 ps-4">Auto</small>
+                <div class="bg-white rounded pt-3 m-4 d-none d-lg-block">
+                  <small class="m-1 ps-4">Imoveis</small>
                   <h3 class="m-1 ps-4">Find your next home sweet Home </h3>
-                  <div id="carousel_realstate" class="carousel slide" data-bs-ride="carousel">
-                      <div class="carousel-inner">
+                  <div id="carousel_realstate" class="carousel slide " data-bs-ride="carousel">
+                      
+                    <div class="carousel-inner ">
                           {% set chunk_size = 4 %}
                           {% set num_announces = dataReal|length %}
-                          {% for i in range(0, num_announces, chunk_size) %}
-                              {% set start = i %}
-                              {% set end = i + chunk_size %}
-                              <div class="carousel-item {% if i == 0 %}active{% endif %}">
+                          {% for r in range(0, num_announces, chunk_size) %}
+                              {% set start = r %}
+                              {% set end = r + chunk_size %}
+                              <div class="carousel-item {% if r == 0 %}active{% endif %}">
                                   <div class="card-group d-flex justify-content-center">
-                                      {% for j in range(start, end) %}
-                                          {% if j < num_announces %}
-                                              <label for="form_{{ j }}" class="card  label-clickable  rounded img-wrapper {% if j == start %}ms-1 ms-lg-2{% else %}ms-3 ms-lg-1{% endif %}
-                                                  align-items-center mb-3 border border-1 shadow-sm {% if j > start %}d-none d-sm-block{% endif %}">
-                                                  {% if dataReal[j]['image_data'] %}
-                                                      <img src="data:image/png;base64,{{ dataReal[j]['image_data'] }}" class="card-img-top img-fluid rounded announce_image" alt="{{ dataReal[j]['title'] }}">
+                                      {% for c in range(start, end) %}
+                                          {% if c < num_announces %}
+                                          <label for="form_{{ c }}" class="card  label-clickable  rounded img-wrapper {% if c == start %}ms-1 ms-lg-2{% else %}ms-3 ms-lg-1{% endif %}
+                                          align-items-center mb-3 border border-1 shadow-sm {% if c > start %}d-none d-sm-block{% endif %}">
+                                                  {% if dataReal[c]['image_data'] %}
+                                                      <img src="data:image/png;base64,{{ dataReal[c]['image_data'] }}" class="card-img-top img-fluid rounded announce_image" alt="{{ dataReal[c]['title'] }}">
                                                   {% else %}
-                                                      <img class="card-img-top img-fluid rounded announce_image" src="../static/assets/image/place_holder.jpg" alt="{{ dataReal[j]['title'] }}">
+                                                      <img class="card-img-top img-fluid rounded announce_image" src="../static/assets/image/place_holder.jpg" alt="{{ dataReal[c]['title'] }}">
                                                   {% endif %}
-                                                  <form id="form_{{ j }}" method="post" action="/myads">
-                                                      <input type="hidden" name="id_announce" value="{{ dataReal[j]['id'] }}">
-                                                  </form>
+                                                
                                                   <div class="card-body">
-                                                      <p>${{ dataReal[j]['price'] }},00</p>
-                                                      <p>{{ dataReal[j]['title'] }}</p>
+                                                      <p>${{ dataReal[c]['price'] }},00</p>
+                                                      <p>{{ dataReal[c]['title'] }}</p>
                                                   </div>
                                                   <div class="card-footer">
                                                       <p>
                                                         <img class="img-fluid" src="/static/assets/image/icons8-location-64.png" alt="" style="height: 16px; width: 16px;">
-                                                        {{ dataReal[j]['address'] }}
+                                                        {{ dataReal[c]['address'] }}
                                                       </p>                     
                                                   </div>
+                                                  <form id="form_real{{ c }}" method="post" action="/myads">
+                                                    <input type="hidden" name="id_announce" value="{{ dataReal[c]['id'] }}">
+                                                    <button type="submit" class="btn-stretched-link"></button>
+                                                </form>
                                               </label>
                                           {% endif %}
                                       {% endfor %}
@@ -256,6 +325,7 @@
                               </div>
                           {% endfor %}
                       </div>
+                                               
                       <button class="carousel-control-prev" type="button" data-bs-target="#carousel_realstate" data-bs-slide="prev">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Previous</span>
@@ -266,7 +336,61 @@
                       </button>
                   </div>
                 </div>
-                <!-- RealState -->
+                <!-- RealState mobile -->
+                
+                <!-- RealState mobile -->
+                <div class="bg-white rounded pt-3 m-4 d-md-none">
+                    <small class="m-1 ps-4">Imóveis</small>
+                    <h3 class="m-1 ps-4">Encontre sua próxima casa doce lar</h3>
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for index in range(dataReal|length) %}
+                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ index }}" {% if index == 0 %}class="active"{% endif %} aria-label="Slide {{ index + 1 }}"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            {% for realMobile in dataReal %}
+                                <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+                                    <label class="card label-clickable rounded img-wrapper__Mobile">
+                                        <div class="card justify-content-center">
+                                            {% if realMobile['image_data'] %}
+                                                <img src="data:image/png;base64,{{ realMobile['image_data'] }}" class="card-img-top img-fluid rounded announce_image" alt="{{ realMobile['title'] }}">
+                                            {% else %}
+                                                <img class="card-img-top img-fluid rounded announce_image" src="../static/assets/image/place_holder.jpg" alt="{{ realMobile['title'] }}">
+                                            {% endif %}
+                                            <form id="form_mobile_{{ loop.index }}" method="post" action="/myads">
+                                                <input type="hidden" name="id_announce" value="{{ realMobile['id'] }}">
+                                                <button type="submit" class="btn-stretched-link"></button>
+                                            </form>
+                                            <div class="card-body">
+                                                <h5>${{ realMobile['price'] }},00</h5>
+                                                <p>{{ realMobile['title'] }}</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <p>
+                                                    <img class="img-fluid" src="/static/assets/image/icons8-location-64.png" alt="" style="height: 16px; width: 16px;">
+                                                    {{ realMobile['address'] }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+
+                
+
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var cardLabels = document.querySelectorAll('.card.label-clickable');
@@ -283,12 +407,4 @@
 </script>  
 </div>
 
-                
-
-         
-        
-    
-    
-    
-    
 {% endblock %}

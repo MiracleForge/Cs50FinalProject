@@ -130,6 +130,7 @@
                         <div class="text-black bg-light mt-4 rounded shadow-sm vr text-md">
                             <h4 class="text-center text-md">Atributtes</h4>
                             <ul style="list-style-type: none;" id="dependencyList">
+                                {% if data['announcement_type'] == 'RealState' %}
                                 {% for json_data in json_data_list %}
                                     {% if 'DependenciesID' in json_data %}
                                         {% for dependency in json_data['DependenciesID'] %}
@@ -140,6 +141,18 @@
                                         {% endfor %}
                                     {% endif %}
                                 {% endfor %}
+                                {% else %}
+                                    {% for json_data in json_data_list %}
+                                    {% if 'CarAtributtes' in json_data %}
+                                        {% for dependency in json_data['CarAtributtes'] %}
+                                            <li class="pb-2 text-secondary">
+                                                <img class="detail_icons img-fluid" alt="Icons Details" style="height: 24px; width: 24px;">
+                                                {{ dependency }}
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+                                {% endif %}
                             </ul>
                         </div>
                     {% endif %}                                                                                                                    

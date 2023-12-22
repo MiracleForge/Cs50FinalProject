@@ -9,22 +9,21 @@
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("pulseButton").addEventListener("click", function () {
     
-            // Verifica se todos os campos do formulário são válidos
+
             if (document.getElementById("username").checkValidity() &&
                 document.getElementById("email").checkValidity() &&
                 document.getElementById("password").checkValidity() &&
                 document.getElementById("confirmPassword").checkValidity()) {
                 
-                // Adiciona a classe de animação pulse ao botão
+
                 this.classList.add("animate__animated", "animate__pulse");
     
-                // Remove a classe de animação pulse após 1 segundo
                 setTimeout(() => {
                     this.classList.remove("animate__animated", "animate__pulse");
                 }, 1000); 
             } else {
-                // Se algum campo não for válido, exibe um alerta
-                alert("Por favor, preencha todos os campos do formulário corretamente.");
+             
+                alert("Please you must provide all fields correctly");
             }
         });
     });

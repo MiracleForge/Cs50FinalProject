@@ -7,7 +7,7 @@
 {% block main %}
   <div class="container-xxl font-family-arial d-flex flex-column pt-5">
     <h1 class="w-100 mb-4 text-center pt-5"><strong>My Announces!</strong></h1>
-    <hr class="w-100 my-4"> <!-- Linha horizontal abaixo do título -->
+    <hr class="w-100 my-4"> 
     <div class="row">
       {% for data in user_ads %}
         <div class="col-12 col-lg-6">
@@ -22,7 +22,7 @@
               </div>
               <div class="p-3">
                 <h3 class="card-title text-white text-break">
-                  {{ data['title'][:20] }}{# Adjust the number '50' to your desired character limit #}
+                  {{ data['title'][:20] }}
                   {% if data['title']|length > 20 %}...{% endif %}
                 </h3>
                 <p class="card-text"><b>$ {{ data['price'] }},00</b></p>
