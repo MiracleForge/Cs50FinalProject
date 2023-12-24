@@ -70,7 +70,6 @@ def index():
             "LIMIT 16;"
         )
 
-
         for ad in dataCars:
                 if ad["image_data"]:
                     ad["image_data"] = convert_blob_to_png(ad["image_data"])
@@ -80,6 +79,171 @@ def index():
                     ad["image_data"] = convert_blob_to_png(ad["image_data"])
 
         return render_template("index.html", dataReal=dataReal, dataCars=dataCars)
+
+
+@app.route("/filtered_ads", methods=['POST'])
+def filtered_Ads():
+    menu_indexFilter = None
+    search_query = request.form.get('search_query')
+
+    if request.form.get("filtered_ads") or request.form.get("promotionTech"):
+        
+        if request.form.get('filtered_ads') == 'TVs':
+            seach_filter = db.execute("""
+                SELECT
+                    announces.id,
+                    announces.title,
+                    TechEssentials.Price AS price,
+                    TechEssentials.Address AS address,
+                    AnnounceImages.image_data
+                FROM
+                    announces
+                LEFT JOIN
+                    TechEssentials ON TechEssentials.announce_id = announces.id AND announces.announcement_type = 'TechEssentials'
+                LEFT JOIN
+                    AnnounceImages ON AnnounceImages.announce_id = announces.id
+                WHERE
+                    announces.announcement_type = 'TechEssentials'
+                    AND TechEssentials.Type = ?;
+
+                """, (request.form.get('filtered_ads'),))
+            menu_indexFilter = 'Tech Essentials'
+        elif request.form.get('filtered_ads') == 'promotionTech':
+            
+            seach_filter = db.execute("""
+                SELECT
+                    announces.id,
+                    announces.title,
+                    TechEssentials.Price AS price,
+                    TechEssentials.Address AS address,
+                    AnnounceImages.image_data
+                FROM
+                    announces
+                LEFT JOIN
+                    TechEssentials ON TechEssentials.announce_id = announces.id AND announces.announcement_type = 'TechEssentials'
+                LEFT JOIN
+                    AnnounceImages ON AnnounceImages.announce_id = announces.id
+                WHERE
+                    announces.announcement_type = 'TechEssentials'
+                    AND (
+                        announces.title LIKE '%promotion%'
+                        OR announces.title LIKE '%discount%'
+                        OR announces.title LIKE '%off%'
+           
+                    );
+            """)
+            print(seach_filter)
+            menu_indexFilter = 'Tech Off'
+
+        else:
+            menu_indexFilter = request.form.get("filtered_ads")
+            seach_filter = db.execute(
+                "SELECT announces.id, announces.title, "
+                "CASE "
+                "   WHEN announces.announcement_type = 'PreOwnedCars' THEN PreOwnedCars.Price "
+                "   WHEN announces.announcement_type = 'RealState' THEN RealState.Price "
+                "   WHEN announces.announcement_type = 'HomeEssentials' THEN HomeEssentials.Price "
+                "   WHEN announces.announcement_type = 'TechEssentials' THEN TechEssentials.Price "
+                "   WHEN announces.announcement_type = 'MusicalInstrument' THEN MusicalInstrument.Price "
+                "   WHEN announces.announcement_type = 'Children_Items_Toys' THEN Children_Items_Toys.Price "
+                "   WHEN announces.announcement_type = 'Pets' THEN Pets.Price "
+                "   WHEN announces.announcement_type = 'Commerce_office' THEN Commerce_office.Price "
+                "   WHEN announces.announcement_type = 'Fashion_Beauty' THEN Fashion_Beauty.Price "
+                "   WHEN announces.announcement_type = 'Games' THEN Games.Price "
+                "END AS price, "
+                "CASE "
+                "   WHEN announces.announcement_type = 'PreOwnedCars' THEN PreOwnedCars.Address "
+                "   WHEN announces.announcement_type = 'RealState' THEN RealState.Address "
+                "   WHEN announces.announcement_type = 'HomeEssentials' THEN HomeEssentials.Address "
+                "   WHEN announces.announcement_type = 'TechEssentials' THEN TechEssentials.Address "
+                "   WHEN announces.announcement_type = 'MusicalInstrument' THEN MusicalInstrument.Address "
+                "   WHEN announces.announcement_type = 'Children_Items_Toys' THEN Children_Items_Toys.Address "
+                "   WHEN announces.announcement_type = 'Pets' THEN Pets.Address "
+                "   WHEN announces.announcement_type = 'Commerce_office' THEN Commerce_office.Address "
+                "   WHEN announces.announcement_type = 'Fashion_Beauty' THEN Fashion_Beauty.Address "
+                "   WHEN announces.announcement_type = 'Games' THEN Games.Address "
+                "END AS address, "
+                "AnnounceImages.image_data "
+                "FROM announces "
+                "LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id AND announces.announcement_type = 'PreOwnedCars' "
+                "LEFT JOIN RealState ON RealState.announce_id = announces.id AND announces.announcement_type = 'RealState' "
+                "LEFT JOIN HomeEssentials ON HomeEssentials.announce_id = announces.id AND announces.announcement_type = 'HomeEssentials' "
+                "LEFT JOIN TechEssentials ON TechEssentials.announce_id = announces.id AND announces.announcement_type = 'TechEssentials' "
+                "LEFT JOIN MusicalInstrument ON MusicalInstrument.announce_id = announces.id AND announces.announcement_type = 'MusicalInstrument' "
+                "LEFT JOIN Children_Items_Toys ON Children_Items_Toys.announce_id = announces.id AND announces.announcement_type = 'Children_Items_Toys' "
+                "LEFT JOIN Pets ON Pets.announce_id = announces.id AND announces.announcement_type = 'Pets' "
+                "LEFT JOIN Commerce_office ON Commerce_office.announce_id = announces.id AND announces.announcement_type = 'Commerce_office' "
+                "LEFT JOIN Fashion_Beauty ON Fashion_Beauty.announce_id = announces.id AND announces.announcement_type = 'Fashion_Beauty' "
+                "LEFT JOIN Games ON Games.announce_id = announces.id AND announces.announcement_type = 'Games' "
+                "LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id "
+                "WHERE announces.announcement_type = ?;",
+                (menu_indexFilter,)
+            )
+
+        for ad in seach_filter:
+            if ad["image_data"]:
+                ad["image_data"] = convert_blob_to_png(ad["image_data"])
+          
+        return render_template("index_filteredAds.html", menu_indexFilter=menu_indexFilter, seach_filter=seach_filter)
+    #search form layout
+    if search_query:
+        query_pattern = f"%{search_query}%"
+
+        seach_filter = db.execute(
+            f"SELECT announces.id, announces.title, "
+            f"CASE "
+            f"   WHEN announces.announcement_type = 'PreOwnedCars' THEN PreOwnedCars.Price "
+            f"   WHEN announces.announcement_type = 'RealState' THEN RealState.Price "
+            f"   WHEN announces.announcement_type = 'HomeEssentials' THEN HomeEssentials.Price "
+            f"   WHEN announces.announcement_type = 'TechEssentials' THEN TechEssentials.Price "
+            f"   WHEN announces.announcement_type = 'MusicalInstrument' THEN MusicalInstrument.Price "
+            f"   WHEN announces.announcement_type = 'Children_Items_Toys' THEN Children_Items_Toys.Price "
+            f"   WHEN announces.announcement_type = 'Pets' THEN Pets.Price "
+            f"   WHEN announces.announcement_type = 'Commerce_office' THEN Commerce_office.Price "
+            f"   WHEN announces.announcement_type = 'Fashion_Beauty' THEN Fashion_Beauty.Price "
+            f"   WHEN announces.announcement_type = 'Games' THEN Games.Price "
+            f"END AS price, "
+            f"CASE "
+            f"   WHEN announces.announcement_type = 'PreOwnedCars' THEN PreOwnedCars.Address "
+            f"   WHEN announces.announcement_type = 'RealState' THEN RealState.Address "
+            f"   WHEN announces.announcement_type = 'HomeEssentials' THEN HomeEssentials.Address "
+            f"   WHEN announces.announcement_type = 'TechEssentials' THEN TechEssentials.Address "
+            f"   WHEN announces.announcement_type = 'MusicalInstrument' THEN MusicalInstrument.Address "
+            f"   WHEN announces.announcement_type = 'Children_Items_Toys' THEN Children_Items_Toys.Address "
+            f"   WHEN announces.announcement_type = 'Pets' THEN Pets.Address "
+            f"   WHEN announces.announcement_type = 'Commerce_office' THEN Commerce_office.Address "
+            f"   WHEN announces.announcement_type = 'Fashion_Beauty' THEN Fashion_Beauty.Address "
+            f"   WHEN announces.announcement_type = 'Games' THEN Games.Address "
+            f"END AS address, "
+            f"AnnounceImages.image_data "
+            f"FROM announces "
+            f"LEFT JOIN PreOwnedCars ON PreOwnedCars.announce_id = announces.id AND announces.announcement_type = 'PreOwnedCars' "
+            f"LEFT JOIN RealState ON RealState.announce_id = announces.id AND announces.announcement_type = 'RealState' "
+            f"LEFT JOIN HomeEssentials ON HomeEssentials.announce_id = announces.id AND announces.announcement_type = 'HomeEssentials' "
+            f"LEFT JOIN TechEssentials ON TechEssentials.announce_id = announces.id AND announces.announcement_type = 'TechEssentials' "
+            f"LEFT JOIN MusicalInstrument ON MusicalInstrument.announce_id = announces.id AND announces.announcement_type = 'MusicalInstrument' "
+            f"LEFT JOIN Children_Items_Toys ON Children_Items_Toys.announce_id = announces.id AND announces.announcement_type = 'Children_Items_Toys' "
+            f"LEFT JOIN Pets ON Pets.announce_id = announces.id AND announces.announcement_type = 'Pets' "
+            f"LEFT JOIN Commerce_office ON Commerce_office.announce_id = announces.id AND announces.announcement_type = 'Commerce_office' "
+            f"LEFT JOIN Fashion_Beauty ON Fashion_Beauty.announce_id = announces.id AND announces.announcement_type = 'Fashion_Beauty' "
+            f"LEFT JOIN Games ON Games.announce_id = announces.id AND announces.announcement_type = 'Games' "
+            f"LEFT JOIN AnnounceImages ON AnnounceImages.announce_id = announces.id "
+            f"WHERE announces.title LIKE '{query_pattern}' OR announces.description LIKE '{query_pattern}' "
+            f"OR PreOwnedCars.CarModel LIKE '{query_pattern}' OR RealState.PropertyType LIKE '{query_pattern}' "
+            f"OR HomeEssentials.Categorys LIKE '{query_pattern}' OR TechEssentials.Type LIKE '{query_pattern}' "
+            f"OR MusicalInstrument.Type LIKE '{query_pattern}' OR Children_Items_Toys.Type LIKE '{query_pattern}' "
+            f"OR Pets.Type LIKE '{query_pattern}' OR Commerce_office.Address LIKE '{query_pattern}' "
+            f"OR Fashion_Beauty.Type LIKE '{query_pattern}' OR Games.Type LIKE '{query_pattern}';"
+        )
+
+        if not seach_filter:
+            return render_template("index_filteredAds.html", seach_filter=seach_filter, search_query=search_query)
+    
+        for ad in seach_filter:
+            if ad["image_data"]:
+                ad["image_data"] = convert_blob_to_png(ad["image_data"])
+
+        return render_template("index_filteredAds.html", seach_filter=seach_filter, search_query=search_query)
 
 
 #Login routes
@@ -229,7 +393,7 @@ def ShowingUserAds():
                 user_id)
 
 
-            # Processa cada anúncio para converter e adicionar a imagem
+     
             for ad in user_ads:
                     if ad["image_data"]:
                         ad["image_data"] = convert_blob_to_png(ad["image_data"])
@@ -323,8 +487,6 @@ def announce():
             return render_template("AdsCreate.html", ads_type=ad_type_return)
 
     return render_template("announce.html", error=error_message)
-
-
 
 
 @app.route("/adsCreate", methods=['POST'])
@@ -453,11 +615,4 @@ def adCreationDB():
                 flash("Announce Create Sucessifuly")
                 return redirect('/')
                     
-    return render_template("AdsCreate.html", error=error_message)
-
-
-
-
-
-
-               
+    return render_template("AdsCreate.html", error=error_message)           

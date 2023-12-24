@@ -35,10 +35,12 @@
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
-          <div class="carousel-item active">
+          <div class="carousel-item active"
+          onclick="sendfilter('TVs')">
             <img src="/static/assets/image/bannerhomeTV.jpg" class="img-fluid w-100 d-block rounded"  alt="...">
           </div>
-          <div class="carousel-item">
+          <div class="carousel-item"
+          onclick="sendfilter('promotionTech')">
             <img src="/static/assets/image/bannerTechhome.jpg" class="img-fluid w-100 d-block rounded" alt="..." >
           </div>
           <div class="carousel-item">
@@ -59,45 +61,58 @@
      
           <div class="col-12 col-lg-12 shadow-lg " >
             <div class="row pt-2 pt-lg-4 pb-2 pb-lg-3">
-              <div class="card-group p-0 d-sm-flex justify-content-center "  >
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType ">
-                  <img src="/static/assets/image/icons8-houses-96.png" class="card-img-top img-fluid" alt="..." >
+              <div class="card-group p-0 d-sm-flex justify-content-center ">
+                <form id="filteredForm" method="post" action="/filtered_ads" style="display: none;">
+                    <input type="hidden" name="filtered_ads" id="categoryIdInput" value="">
+                  </form>
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType" 
+                onclick="sendfilter('RealState')">
+                  <img src="/static/assets/image/icons8-houses-96.png" class="card-img-top img-fluid" alt="RealState" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-traffic-jam-96 (3).png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 border border-2 custon__homeType"
+                onclick="sendfilter('PreOwnedCars')">
+                  <img src="/static/assets/image/icons8-traffic-jam-96 (3).png" class="card-img-top img-fluid" alt="PreOwnedCars" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-lampshade-64 (1).png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('HomeEssentials')">
+                  <img src="/static/assets/image/icons8-lampshade-64 (1).png" class="card-img-top img-fluid" alt="HomeEssentials" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-laptop-96.png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('TechEssentials')">
+                  <img src="/static/assets/image/icons8-laptop-96.png" class="card-img-top img-fluid" alt="TechEssentials" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-musical-notes-100.png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('MusicalInstrument')">
+                  <img src="/static/assets/image/icons8-musical-notes-100.png" class="card-img-top img-fluid" alt="MusicalInstrument" >
   
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-toys-64.png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('Children_Items_Toys')">
+                  <img src="/static/assets/image/icons8-toys-64.png" class="card-img-top img-fluid" alt="Children_Items_Toys" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-pets-100.png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('Pets')">
+                  <img src="/static/assets/image/icons8-pets-100.png" class="card-img-top img-fluid" alt="Pets" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-office-100.png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('Commerce_office')">
+                  <img src="/static/assets/image/icons8-office-100.png" class="card-img-top img-fluid" alt="Commerce_office" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-fashion-100.png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('Fashion_Beauty')">
+                  <img src="/static/assets/image/icons8-fashion-100.png" class="card-img-top img-fluid" alt="Fashion_Beauty" >
 
                 </div>
-                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType">
-                  <img src="/static/assets/image/icons8-controller-100.png" class="card-img-top img-fluid" alt="..." >
+                <div class="card d-sm-flex rounded me-1 me-lg-4 ms-1 ms-lg-4 align-items-center bg-dark m-1 d-none d-sm-block border border-2 custon__homeType"
+                onclick="sendfilter('Games')">
+                  <img src="/static/assets/image/icons8-controller-100.png" class="card-img-top img-fluid" alt="Games" >
 
                 </div>
                 <!-- CARROSEL-->
@@ -106,14 +121,17 @@
                         <!-- Primeiro conjunto de 3 itens -->
                         <div class="carousel-item active">
                             <div class="d-flex justify-content-center">
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex custon__homeType">
-                                    <img src="/static/assets/image/icons8-houses-96.png" class="card-img-top img-fluid border border-2" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex custon__homeType"
+                                onclick="sendfilter('RealState')">
+                                    <img src="/static/assets/image/icons8-houses-96.png" class="card-img-top img-fluid border border-2" alt="Real States">
                                 </div>
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-traffic-jam-96 (3).png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('PreOwnedCars')">
+                                    <img src="/static/assets/image/icons8-traffic-jam-96 (3).png" class="card-img-top img-fluid" alt="PreOwnedCars">
                                 </div>
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-lampshade-64 (1).png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('HomeEssentials')">
+                                    <img src="/static/assets/image/icons8-lampshade-64 (1).png" class="card-img-top img-fluid" alt="HomeEssentials">
                                 </div>
                             </div>
                         </div>
@@ -121,14 +139,17 @@
                         <!-- Segundo conjunto de 3 itens -->
                         <div class="carousel-item">
                             <div class="d-flex justify-content-center">
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-laptop-96.png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('TechEssentials')">
+                                    <img src="/static/assets/image/icons8-laptop-96.png" class="card-img-top img-fluid" alt="TechEssentials">
                                 </div>
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-musical-notes-100.png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('MusicalInstrument')">
+                                    <img src="/static/assets/image/icons8-musical-notes-100.png" class="card-img-top img-fluid" alt="MusicalInstrument">
                                 </div>
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-toys-64.png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('Children_Items_Toys')">
+                                    <img src="/static/assets/image/icons8-toys-64.png" class="card-img-top img-fluid" alt="Children_Items_Toys">
                                 </div>
                             </div>
                         </div>
@@ -136,14 +157,17 @@
                         <!-- Terceiro conjunto -->
                         <div class="carousel-item">
                             <div class="d-flex justify-content-center">
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-pets-100.png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('Pets')">
+                                    <img src="/static/assets/image/icons8-pets-100.png" class="card-img-top img-fluid" alt="Pets">
                                 </div>
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-office-100.png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('Commerce_office')">
+                                    <img src="/static/assets/image/icons8-office-100.png" class="card-img-top img-fluid" alt="Commerce_office">
                                 </div>
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-fashion-100.png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('Fashion_Beauty')">
+                                    <img src="/static/assets/image/icons8-fashion-100.png" class="card-img-top img-fluid" alt="Fashion_Beauty">
                                 </div>
                             </div>
                         </div>
@@ -151,8 +175,9 @@
                         <!-- Quarto conjunto-->
                         <div class="carousel-item">
                             <div class="d-flex justify-content-center">
-                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType">
-                                    <img src="/static/assets/image/icons8-controller-100.png" class="card-img-top img-fluid" alt="...">
+                                <div class="card rounded me-3 me-lg-4 ms-3 ms-lg-4 align-items-center bg-dark m-1 d-flex border border-2 custon__homeType"
+                                onclick="sendfilter('Games')">
+                                    <img src="/static/assets/image/icons8-controller-100.png" class="card-img-top img-fluid" alt="Games">
                                 </div>
                             </div>
                         </div>
@@ -168,14 +193,11 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-                <!---->
-                <form method="post" action="/seu-endpoint-de-formulario" id="hiddenForm">
-                  <input type="hidden" name="id" value="{{id}}">
-                  <div>
-                      <img src="/static/assets/image/carbanner.jpg" class="img-fluid w-100 pt-2 pt-lg-4 p-1 shadow-sm border-1" alt="..." style="cursor: pointer;">
-                  </div>
-              </form>
-              
+                <!--Car banner-->
+                <div onclick="sendfilter('PreOwnedCars')">
+                    <img src="/static/assets/image/carbanner.jpg" class="img-fluid w-100 pt-2 pt-lg-4 p-1 shadow-sm border-1" alt="..." style="cursor: pointer;">
+                </div>
+                
                 <!-- Car Announces -->
                 <div class="bg-white rounded pt-3 m-4 d-none d-lg-block">
                     <small class="m-1 ps-4">Auto</small>
@@ -392,18 +414,13 @@
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var cardLabels = document.querySelectorAll('.card.label-clickable');
+  function sendfilter(categoryId) {
+    document.getElementById('categoryIdInput').value = categoryId;
 
-    cardLabels.forEach(function (cardLabel, index) {
-      cardLabel.addEventListener('click', function () {
-        var form = document.getElementById('form_' + index);
-        if (form) {
-          form.submit();
-        }
-      });
-    });
-  });
+    document.getElementById('filteredForm').submit();
+}
+
+
 </script>  
 </div>
 

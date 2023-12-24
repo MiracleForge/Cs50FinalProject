@@ -1,43 +1,68 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    My ads
+    My Ads
 {% endblock %}
 
 {% block main %}
-  <div class="container-xxl font-family-arial d-flex flex-column pt-5">
-    <h1 class="w-100 mb-4 text-center pt-5"><strong>My Announces!</strong></h1>
-    <hr class="w-100 my-4"> 
-    <div class="row">
-      {% for data in user_ads %}
-        <div class="col-12 col-lg-6">
-          <div class="card m-5 card-title">
-            <div class="card-body d-flex custon-cardbord rounded-left rounded-right rounded-top">
-              <div class="mr-3">
-                {% if data['image_data'] %}
-                  <img class="img-fluid rounded hover-zoom announce_image"  src="data:image/png;base64,{{ data['image_data'] }}" alt="Announce Image">
-                {% else %}
-                  <img class="img-fluid rounded hover-zoom announce_image"  src="../static/assets/image/place_holder.jpg" alt="Announce Image">
-                {% endif %}
-              </div>
-              <div class="p-3">
-                <h3 class="card-title text-white text-break">
-                  {{ data['title'][:20] }}
-                  {% if data['title']|length > 20 %}...{% endif %}
-                </h3>
-                <p class="card-text"><b>$ {{ data['price'] }},00</b></p>
-              </div>
-              
-            </div>
-            <div class="card-footer pb-3 pr-4 rounded-bottom rounded-right rounded-left bg-dark">
-                <form method="post" action="/myads">
-                  <input type="hidden" name="id_announce" value="{{ data['id'] }}">
-                  <button type="submit" class="btn btn-primary btn-light" id="MyadsBtn">Go to the Announce!</button>
-                </form>
-              </div>
-          </div>
+<div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block ">
+    <div class="card-header bg-dark text-white h-25 text-center">
+
+        <div class="pt-5">
+            <h1 class="">{{ "My Announces!" }}</h1>
+            <hr class="shadow-sm">
         </div>
-      {% endfor %}
+
+        <div class="row">
+            {% for data in user_ads %}
+                <div class="col-md-6">
+                    <div class="card mb-3 custom-card d-flex flex-column" data-id="{{ data['id'] }}" onclick="submitForm(this)">
+
+                        <form id="form_{{ data['id'] }}" method="post" action="/myads">
+                            <input type="hidden" name="id_announce" value="{{ data['id'] }}">
+                        </form>
+
+                        <div class="row g-0">
+                            <div class="col-md-4 overflow-hidden rounded">
+                                {% if data['image_data'] %}
+                                    <img src="data:image/png;base64,{{ data['image_data'] }}" class="card-img-top img-fluid rounded announce_image" alt="{{ data['title'] }}">
+                                {% else %}
+                                    <img class="card-img-top img-fluid rounded announce_image card_hover" src="../static/assets/image/place_holder.jpg" alt="{{ data['title'] }}">
+                                {% endif %}
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex">
+                                        <div class="me-auto price-container">
+                                            <h5 class="card-title text-muted">{{ data['title'] }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="price-container mt-3">
+                                        <img src="/static/assets/image/icons8-price-50.png" alt="">
+                                        <h3 class="text-dark ms-3">${{ data['price'] }},00</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <p class="text-dark text-start">
+                                <img class="img-fluid" src="/static/assets/image/icons8-location-64.png" alt="" style="height: 16px; width: 16px;">
+                                {{ data['address'] }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
-  </div>
+</div>
+
+<script>
+    function submitForm(element) {
+        var id = element.getAttribute('data-id');
+        document.getElementById('form_' + id).submit();
+    }
+</script>
 {% endblock %}

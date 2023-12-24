@@ -146,6 +146,34 @@ body {
 .card-title:hover {
     color: #007BFF !important;
 }
+
+.price-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  .price-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+
+  .price-container img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .price-container h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #007BFF;
+  }
 /*Animations work with git */
 
 

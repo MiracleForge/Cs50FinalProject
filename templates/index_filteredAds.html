@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Filtered Ads
+{% endblock %}
+
+{% block main %}
+<div class="container-xxl p-3 d-flex flex-column p-2 rounded border border-1 d-block ">
+    <div class="card-header bg-dark text-white h-25 text-center">
+
+        <div class="pt-5">
+            {% if menu_indexFilter %}
+                <h3 class="">{{ menu_indexFilter }}</h3>
+            {% else %}
+                <h3 class="">Searching for " {{ search_query }} "</h3>
+            {% endif %}
+            <hr class="shadow-sm">
+        </div>
+
+        {% if seach_filter %}
+            {% for card_filtered in seach_filter %}
+            <div class="card mb-3 img-wrapper d-flex flex-column flex-grow-1 label-clickable" data-id="{{ card_filtered['id'] }}" onclick="submitForm(this)">
+
+                    <form id="form_{{ card_filtered['id'] }}" method="post" action="/myads">
+                        <input type="hidden" name="id_announce" value="{{ card_filtered['id'] }}">
+                    </form>
+                    <div class="row g-0 flex-grow-1">
+                        <div class="col-md-4 overflow-hidden rounded">
+                            {% if card_filtered['image_data'] %}
+                                <img src="data:image/png;base64,{{ card_filtered['image_data'] }}" class="card-img-top img-fluid rounded announce_image" alt="{{ card_filtered['title'] }}">
+                            {% else %}
+                                <img class="card-img-top img-fluid rounded announce_image card_hover" src="../static/assets/image/place_holder.jpg" alt="{{ card_filtered['title'] }}">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8 ">
+                            <div class="card-body d-flex flex-column ">
+                                <div class="d-flex ">
+                                    <div class="me-auto price-container">
+                                        <h5 class=" text-muted">{{ card_filtered['title'] }}</h5>
+                                    </div>
+                                </div>
+                                <div class="price-container mt-3">
+                                    <img src="/static/assets/image/icons8-price-50.png" alt="">
+                                    <h3 class="text-dark ms-3">${{ card_filtered['price'] }},00</h3>
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p class="text-dark text-start">
+                            <img class="img-fluid" src="/static/assets/image/icons8-location-64.png" alt="" style="height: 16px; width: 16px;">
+                            {{ card_filtered['address'] }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h3>No results found for '{{ search_query }}'. Try a different search term. <emoji>😢</emoji></h3>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function submitForm(element) {
+        var id = element.getAttribute('data-id');
+        document.getElementById('form_' + id).submit();
+    }
+</script>
+
+{% endblock %}
