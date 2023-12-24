@@ -133,7 +133,7 @@ def filtered_Ads():
                     );
             """)
             menu_indexFilter = 'Tech Off'
-            
+
         else:
             menu_indexFilter = request.form.get("filtered_ads")
             seach_filter = db.execute(
@@ -614,4 +614,23 @@ def adCreationDB():
                 flash("Announce Create Sucessifuly")
                 return redirect('/')
                     
-    return render_template("AdsCreate.html", error=error_message)           
+    return render_template("AdsCreate.html", error=error_message)   
+
+
+@app.route("/chat", methods=['GET', 'POST'])
+@login_required
+def user_chat():
+    user_id = session["user_id"]
+    user_messages = db.execute("SELECT * FROM Chat WHERE receiver_user_id = ?", user_id)
+    new_chat = request.args.get("openChat")
+
+    # Redirection requests
+    if request.method == 'GET':
+        if not new_chat:
+            new_chat = False
+
+        return render_template("chat.html", user_messages=user_messages, new_chat=new_chat)
+    else:
+
+        return render_template('chat.html')
+

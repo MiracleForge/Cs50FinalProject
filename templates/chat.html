@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Chat
+{% endblock %}
+
+{% block main %}
+<div class="container-xxl p-lg-3 d-flex flex-column  rounded border border-1 d-block p-x-0 ">
+    <div class="card-header bg-dark text-white  text-center">
+        <h2 class="pt-3 title">My messages</h2>
+        <hr>
+    
+        {% if new_chat == False and not user_messages %}
+            <h5 class="mx-auto mt-3 pb-3 title price-container">Sorry you don't have any message yet</h5>
+            <img class="img-fluid w-25 h-25 mx-auto mt-5 d-block" src="/static/assets/image/icons8-chat-100.png" alt="no messages" >
+    </div>
+        {% else %}
+            <div class="card-body bg-dark text-white text-center px-0 px-mb-3 rounded">
+                <div class="row">
+                    <div class="col-4 col-md-3 col-lg-4 border border-1 mb-3 mb-lg-0 bg-white" >
+                        <!-- List of messages-->
+                        <ol class="list-group list-group-numbered">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                              <div class="ms-2 me-auto">
+                                <div class="fw-bold">Subheading</div>
+                                Cras justo odio
+                              </div>
+                              <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                              <div class="ms-2 me-auto">
+                                <div class="fw-bold">Subheading</div>
+                                Cras justo odio
+                              </div>
+                              <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                              <div class="ms-2 me-auto">
+                                <div class="fw-bold">Subheading</div>
+                                Cras justo odio
+                              </div>
+                              <span class="badge bg-primary rounded-pill">14</span>
+                            </li>
+                          </ol>
+                        <!--List of messages -->
+
+                    </div>
+                <div class="col-8  col-lg-8 border border-1" style="height: 400px; background-color: blue;">
+            
+                </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+</div>
+{% endblock %}
