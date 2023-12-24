@@ -153,7 +153,7 @@ function configIconsConfig(ad_conditions, ad_type) {
         case 'New':
             conditionImagePath = '../static/assets/image/icons8-new-50.png';
             break;
-        case 'Used-Excellent':
+        case 'Used - Excellent':
             conditionImagePath = '../static/assets/image/icons8-used-50.png';
             break;
         case 'Used - Good':
@@ -265,6 +265,9 @@ function configIconsConfig(ad_conditions, ad_type) {
                     break;
                 case 'Eletrodomestics':
                     typeImagePath = '../static/assets/image/icons8-tumble-dryer-100(1).png';
+                    break;
+                case 'Eletric Guitar':
+                    typeImagePath = '../static/assets/image/icons8-bass-guitar-80.png';
                     break;
             
             }

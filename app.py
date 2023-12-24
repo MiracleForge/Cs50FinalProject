@@ -132,9 +132,8 @@ def filtered_Ads():
            
                     );
             """)
-            print(seach_filter)
             menu_indexFilter = 'Tech Off'
-
+            
         else:
             menu_indexFilter = request.form.get("filtered_ads")
             seach_filter = db.execute(
