@@ -112,16 +112,17 @@
                         </div>
                     
                         {% if owner_ad_data != g.display_username %}
-                            <form class="w-75 h-15 mx-auto d-block" action="/chat" method="get">
-                                <button type="submit" id="announceBtn" class="btn btn-light btn-outline text-secondary price-container w-75 h-15 mx-auto d-block">
-                                    <img class="img-fluid w-15 h-15" src="/static/assets/image/icons8-chat-100.png" alt="chat">
-                                    CHAT
-                                    <input type="hidden" name="openChat" value="True">
-                                </button>
-                            </form>
-                        {% endif %}
+                        <form class="w-75 h-15 mx-auto d-block" action="/chat" method="get">
+                            <button type="submit" id="announceBtn" class="btn btn-light btn-outline text-secondary price-container w-75 h-15 mx-auto d-block">
+                                <img class="img-fluid w-15 h-15" src="/static/assets/image/icons8-chat-100.png" alt="chat">
+                                CHAT
+                                <input type="hidden" name="openChat" value="True">
+                                <input type="hidden" name="id_announce" value="{{ id_announce }}">
+                            </button>
+                        </form>
                         
-                                                                                          
+                        {% endif %}
+                                                                                   
                         <div class="text-center  text-black bg-light mt-4 rounded shadow-sm vr text-md text-sm" 
                         >
                             <h2 class=" ">Description</h2>

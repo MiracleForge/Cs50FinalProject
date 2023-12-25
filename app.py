@@ -462,7 +462,7 @@ def ShowingUserAds():
             case 'Games':
                 info_data = db.execute("SELECT * FROM Games WHERE announce_id =?", id_announce)
             
-        return render_template("renderUserAD.html",owner_ad_data=username, announce_data=announce_data, image_data=imagem_ads, info_data=info_data, json_data_list=json_data_list)
+        return render_template("renderUserAD.html",owner_ad_data=username, announce_data=announce_data, image_data=imagem_ads, info_data=info_data, json_data_list=json_data_list, id_announce=id_announce)
 
         
         
@@ -623,13 +623,36 @@ def user_chat():
     user_id = session["user_id"]
     user_messages = db.execute("SELECT * FROM Chat WHERE receiver_user_id = ?", user_id)
     new_chat = request.args.get("openChat")
-
+    id_announce = request.args.get("id_announce")
+    announce_data = None
     # Redirection requests
     if request.method == 'GET':
         if not new_chat:
             new_chat = False
+        else:
+            query = """
+                        SELECT
+                            a.title,
+                            ai.image_data,
+                            a.user_id as announce_user_id,
+                            u.username as announce_username
+                        FROM
+                            announces a
+                        JOIN
+                            AnnounceImages ai ON a.id = ai.announce_id
+                        JOIN
+                            autenticacao u ON a.user_id = u.id
+                        WHERE
+                            a.id = ?
+                    """
 
-        return render_template("chat.html", user_messages=user_messages, new_chat=new_chat)
+            announce_data = db.execute(query, id_announce)
+
+            for ad in announce_data:
+                if ad["image_data"]:
+                    ad["image_data"] = convert_blob_to_png(ad["image_data"])
+
+        return render_template("chat.html", user_messages=user_messages, new_chat=new_chat, announce_data=announce_data)
     else:
 
         return render_template('chat.html')
