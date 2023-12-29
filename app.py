@@ -1,7 +1,7 @@
 import os
 #Basic for the app
 from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session, g
+from flask import Flask, flash, redirect, render_template, request, session, g, jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 import json
@@ -12,12 +12,15 @@ import base64 #converting back to base64
 # To password 
 import re
 
+
 from helpers import login_required, validate_ad_type, get_non_empty_fields, convert_blob_to_png
 
 MAX_TITLE_LENGTH = 60
 MAX_DESCRYPTION_LENGTH = 200
 
 app = Flask(__name__) 
+
+
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
@@ -461,7 +464,7 @@ def ShowingUserAds():
             
             case 'Games':
                 info_data = db.execute("SELECT * FROM Games WHERE announce_id =?", id_announce)
-            
+       
         return render_template("renderUserAD.html",owner_ad_data=username, announce_data=announce_data, image_data=imagem_ads, info_data=info_data, json_data_list=json_data_list, id_announce=id_announce)
 
         
@@ -531,15 +534,13 @@ def adCreationDB():
             for file in request.files.getlist('files'):
                 print(f"Processing file: {file.filename}")
                 image_data = file.read()
-                print(f"Image data: {image_data[:50]}...")  # Printar os primeiros 50 bytes para debug
+                print(f"Image data: {image_data[:50]}...") 
                 db.execute("INSERT INTO AnnounceImages(announce_id, image_data, user_id) VALUES (?, ?, ?)",
                         announce_id, image_data, user_onSection)
-                print("Image inserted successfully.")
             if announce_id is not None:
                 
                 principal_checklist_values = request.form.getlist('principalCheckList')
                 principal_checklist_json = json.dumps(principal_checklist_values)
-                print("Principal Checklist Values:", principal_checklist_values)
 
                 match convert_type:
                     case 'RealState':
@@ -621,39 +622,59 @@ def adCreationDB():
 @login_required
 def user_chat():
     user_id = session["user_id"]
-    user_messages = db.execute("SELECT * FROM Chat WHERE receiver_user_id = ?", user_id)
     new_chat = request.args.get("openChat")
     id_announce = request.args.get("id_announce")
     announce_data = None
+    message_data = None
     # Redirection requests
     if request.method == 'GET':
         if not new_chat:
             new_chat = False
         else:
             query = """
-                        SELECT
-                            a.title,
-                            ai.image_data,
-                            a.user_id as announce_user_id,
-                            u.username as announce_username
-                        FROM
-                            announces a
-                        JOIN
-                            AnnounceImages ai ON a.id = ai.announce_id
-                        JOIN
-                            autenticacao u ON a.user_id = u.id
-                        WHERE
-                            a.id = ?
-                    """
+                SELECT
+                    a.id as announce_id,
+                    a.title,
+                    ai.image_data,
+                    a.user_id as announce_user_id,
+                    u.username as announce_username
+                FROM
+                    announces a
+                JOIN
+                    AnnounceImages ai ON a.id = ai.announce_id
+                JOIN
+                    autenticacao u ON a.user_id = u.id
+                WHERE
+                    a.id = ?
+            """
 
+            message_data = db.execute("SELECT * FROM Chat WHERE sender_user_id =? AND announce_id =?", user_id, id_announce)
             announce_data = db.execute(query, id_announce)
 
             for ad in announce_data:
                 if ad["image_data"]:
                     ad["image_data"] = convert_blob_to_png(ad["image_data"])
 
-        return render_template("chat.html", user_messages=user_messages, new_chat=new_chat, announce_data=announce_data)
+        return render_template("chat.html", sender_messages=message_data, new_chat=new_chat, announce_data=announce_data)
     else:
+        message_text = request.form.get('message_action')
+        id_announce = int(request.form.get('announce_id'))
+        receiver_username = request.form.get('receiver_user_id')
 
-        return render_template('chat.html')
+
+        receiver = db.execute("SELECT id FROM autenticacao WHERE username = ?", (receiver_username,))
+
+        for row in receiver:
+            receiver_id = row.get("id")
+
+        print(user_id, receiver_id, id_announce, message_text)
+
+        db.execute("INSERT INTO Chat (sender_user_id, receiver_user_id, announce_id, message_text) VALUES ({}, {}, {}, '{}')".format(user_id, receiver_id, id_announce, message_text))
+
+
+
+        return redirect("/chat")
+
+
+
 

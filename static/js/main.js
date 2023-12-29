@@ -293,3 +293,5 @@ function configIconsConfig(ad_conditions, ad_type) {
 
 
 
+
+
