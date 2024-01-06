@@ -42,7 +42,7 @@ for ad in user_ads:
     except Exception as e:
         print(f"Error processing image: {e}")
         return None
-
+...
 ## Additional Functionality
 
 The application integrates additional features, stemming from the provided code:
